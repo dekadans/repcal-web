@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    margin-top: 100px;
+    font-weight: 500;
+}
+h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    font-weight: 400;
+}
+h3 {
+    margin: 20px 0;
+    font-weight: 400;
+}
+a, p {
+    color: #000000;
+    font-size: 11px;
+    font-weight: 300;
+}
+#intro {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 1rem;
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    margin-bottom: 80px;
+}
+
+@media screen and (max-width: 720px) {
+    #intro {
+        width: 80%;
+    }
+}
