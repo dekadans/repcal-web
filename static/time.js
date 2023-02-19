@@ -27,13 +27,13 @@ let app = new Vue({
     },
     methods: {
         sync: function() {
-            fetch('/now.json?offset=' + this.offset)
+            fetch('/now?offset=' + this.offset)
             .then(response => response.json())
             .then(data => {
-                this.hour = data.decimal_time.attributes.hour;
-                this.minute = data.decimal_time.attributes.minute;
-                this.second = data.decimal_time.attributes.second;
-                this.date = data.republican_date.formatted;
+                this.hour = data._embedded['republican:time'].attributes.hour;
+                this.minute = data._embedded['republican:time'].attributes.minute;
+                this.second = data._embedded['republican:time'].attributes.second;
+                this.date = data._embedded['republican:date'].text;
             });
         },
         tick: function() {
