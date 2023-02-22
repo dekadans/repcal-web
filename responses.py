@@ -54,15 +54,15 @@ class MomentResponse(HALResponse):
     def __init__(self, dt: datetime) -> None:
         super().__init__(Moment(dt))
 
-        self.add_curie(Curie('rel'))
-        self.add_embedded('rel:date', Date(dt.date()))
-        self.add_embedded('rel:time', Time(dt.time()))
+        self.add_curie(Curie('resource'))
+        self.add_embedded('resource:date', Date(dt.date()))
+        self.add_embedded('resource:time', Time(dt.time()))
 
 
 class ApiIndexResponse(HALResponse):
     def __init__(self) -> None:
         super().__init__(ApiIndex())
-        self.add_curie(Curie('rel'))
+        self.add_curie(Curie('operation'))
         self.add_link(Link(
             rel='service-desc',
             endpoint='meta.openapi',
@@ -76,9 +76,14 @@ class ApiIndexResponse(HALResponse):
             title='Rendered API documentation'
         ))
         self.add_link(Link(
-            rel='rel:now',
+            rel='operation:now',
             endpoint='now_template',
             title='Get the current date and time in the French republican systems',
             templated=True
+        ))
+        self.add_link(Link(
+            rel='operation:paris',
+            endpoint='paris_lookup',
+            title='Get the current Paris Mean date and time'
         ))
 

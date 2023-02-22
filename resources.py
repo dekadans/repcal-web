@@ -64,13 +64,24 @@ class Date(Resource):
 
     def to_dict(self) -> dict:
         return {
-            "text": self.formatted,
+            "texts": {
+                "default": self.formatted
+            },
             "attributes": {
-                "sansculottides": self.republican.is_sansculottides(),
-                "day": self.republican.get_day(),
-                "week": self.republican.get_week_number(),
-                "weekday": self.republican.get_weekday(),
-                "month": self.republican.get_month(),
+                "complementary": self.republican.is_sansculottides(),
+                "day": {
+                    "name": self.republican.get_weekday(),
+                    "number_in_week": self.republican.week_day_index+1,
+                    "number_in_month": self.republican.get_day()
+                },
+                "week": {
+                    "number_in_month": self.republican.get_week_number(),
+                    "number_in_year": (self.republican.get_week_number() + self.republican.month_index * 3)
+                } if not self.republican.is_sansculottides() else None,
+                "month": {
+                    "name": self.republican.get_month(),
+                    "number": self.republican.month_index+1
+                } if not self.republican.is_sansculottides() else None,
                 "year": {
                     "arabic": self.republican.get_year_arabic(),
                     "roman": self.republican.get_year_roman()
@@ -93,9 +104,21 @@ class Time(Resource):
             'second': self.time.second
         }
 
+    def decimal_format(self) -> str:
+        if max(self.decimal.hour, self.decimal.minute, self.decimal.second) == 0:
+            return '0'
+
+        h = self.decimal.hour
+        m = f'{self.decimal.minute:02}' if max(self.decimal.minute, self.decimal.second) > 0 else ''
+        s = f'{self.decimal.second:02}' if self.decimal.second > 0 else ''
+        return f'0,{h}{m}{s}'.rstrip('0')
+
     def to_dict(self) -> dict:
         return {
-            "text": str(self.decimal),
+            "texts": {
+                "default": str(self.decimal),
+                "decimal": self.decimal_format()
+            },
             "attributes": {
                 "hour": self.decimal.hour,
                 "minute": self.decimal.minute,
