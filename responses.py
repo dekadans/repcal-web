@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Dict
 
+from flask import jsonify
+
 from links import Link, Curie
 from resources import Resource, Date, Time, Moment, ApiIndex
 
@@ -47,6 +49,11 @@ class HALResponse:
         if len(self.embedded) > 0:
             resp['_embedded'] = {key: HALResponse(value).to_dict() for (key, value) in self.embedded.items()}
 
+        return resp
+
+    def to_response(self):
+        resp = jsonify(self.to_dict())
+        resp.content_type = "application/hal+json"
         return resp
 
 
