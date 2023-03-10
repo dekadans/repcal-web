@@ -42,13 +42,6 @@ def now_template():
     raise NotFound()
 
 
-@app.get('/paris')
-def paris_lookup():
-    offset = Offset('9.21')
-    t = datetime.now(timezone.utc).timestamp()
-    return redirect(url_for('moment_resource', timestamp=int(t), offset=str(offset)))
-
-
 @app.get('/moment/<int:timestamp>/<string:offset>')
 def moment_resource(timestamp: int, offset: str):
     if timestamp > 6996800000:
@@ -90,25 +83,20 @@ def handle_exception(e):
 class Offset:
     def __init__(self, offset: str) -> None:
         self.min = 0
-        self.sec = 0
         self._extract(offset)
 
     def to_timedelta(self) -> timedelta:
-        return timedelta(minutes=self.min, seconds=self.sec)
+        return timedelta(minutes=self.min)
 
     def __str__(self) -> str:
-        s = str(self.min)
-        if self.sec is not None and self.sec > 0:
-            s += '.' + str(self.sec)
-        return s
+        return str(self.min)
 
     def _extract(self, offset: str):
-        result = re.match('^(-?\d{1,4})(?:\.(\d{1,2}))?$', offset)
+        result = re.match('^(-?\d{1,4})$', offset)
         if result is None:
             raise errors.InvalidOffset()
 
         self._set_minutes(result.group(1))
-        self._set_seconds(result.group(2))
 
     def _set_minutes(self, minutes):
         if minutes is None:
@@ -119,13 +107,3 @@ class Offset:
             raise errors.InvalidOffset()
 
         self.min = minutes
-
-    def _set_seconds(self, seconds):
-        if seconds is None:
-            return
-
-        seconds = int(seconds)
-        if seconds > 59:
-            raise errors.InvalidOffset()
-
-        self.sec = seconds
