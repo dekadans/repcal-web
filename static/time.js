@@ -30,10 +30,12 @@ let app = new Vue({
             fetch('/now?offset=' + this.offset)
             .then(response => response.json())
             .then(data => {
-                this.hour = data._embedded['republican:time'].attributes.hour;
-                this.minute = data._embedded['republican:time'].attributes.minute;
-                this.second = data._embedded['republican:time'].attributes.second;
-                this.date = data._embedded['republican:date'].text;
+                const rep_time = data._embedded['repcal:time'];
+                const rep_date = data._embedded['repcal:date'];
+                this.hour = rep_time.attributes.hour;
+                this.minute = rep_time.attributes.minute;
+                this.second = rep_time.attributes.second;
+                this.date = rep_date.texts.default;
             });
         },
         tick: function() {

@@ -5,7 +5,7 @@ def schema():
     return {
         "title": "Date",
         "type": "object",
-        "description": "Date information in the republican style.",
+        "description": "Date information in the French Republican style.",
         "properties": {
             "_links": {
                 "type": "object",

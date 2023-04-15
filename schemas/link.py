@@ -8,7 +8,7 @@ def url():
 def schema():
     return {
         "title": "Link",
-        "description": "",
+        "description": "A hyperlink.",
         "type": "object",
         "properties": {
             "href": {

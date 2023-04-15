@@ -1,22 +1,25 @@
 from urllib.parse import unquote
 
 from flask import url_for
-from werkzeug.exceptions import NotFound
 
 
 class Link:
     def __init__(self, rel: str, endpoint: str, media_type: str = 'application/hal+json', params=None,
-                 **kwargs) -> None:
+                 external=False, **kwargs) -> None:
         self.rel = rel
         self.endpoint = endpoint
         self.media_type = media_type
         self.params = {} if params is None else params
+        self.external = external
         self.kwargs = kwargs
 
     def parse(self):
-        href = url_for(self.endpoint, _external=True, **self.params)
-        if self.kwargs.get('templated'):
-            href = unquote(href)
+        if self.external:
+            href = self.endpoint
+        else:
+            href = url_for(self.endpoint, _external=True, **self.params)
+            if self.kwargs.get('templated'):
+                href = unquote(href)
 
         return {
             'href': href,

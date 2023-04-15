@@ -1,45 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The current date and time using the systems implemented by the French First Republic.">
-    <meta property="og:image" content="/static/repcal.jpg">
-    <meta property="og:image:width" content="1260">
-    <meta property="og:image:height" content="630">
-    <title>French Republican Calendar</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-    <script src="/static/time.js" defer></script>
-</head>
-<body>
-    <div id="app"></div>
-    <div id="intro">
-        <h3>What is this?</h3>
-        <p>
-            This page shows the current date and time using the systems implemented by the French First Republic.
-            The calendar was used from 1793 to 1805 and decimal time for about a year between 1794 and 1795.
-            Read more on <a href="https://en.wikipedia.org/wiki/French_Republican_calendar" target="_blank">Wikipedia</a>.
-        </p>
+{% extends "layout.html" %}
 
-        <h3>API</h3>
-        <p>
-            Get the current time - <a href="/now.json" target="_blank">now.json</a>
-        </p>
-        <p>
-            Convert a UNIX timestamp - <a href="/946684800.json" target="_blank">&lt;timestamp&gt;.json</a>
-        </p>
-        <p>
-            The <em>offset</em> query parameter may be set to a positive or negative number of minutes from UTC.
-        </p>
-        
-        <h3>Download</h3>
-        <p>
-            The underlying script can be downloaded from <a href="https://pypi.org/project/repcal/" target="_blank">PyPI</a> or <a href="https://github.com/dekadans/repcal" target="_blank">Github</a>.
-        </p>
-    </div>
-    <a href="https://tthe.se" target="_blank">tthe.se</a>
-</body>
-</html>
+{% block head %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script src="/static/time.js" defer></script>
+{% endblock %}
+{% block content %}
+<div id="app"></div>
+<div id="intro">
+    <h3>What is this?</h3>
+    <p>
+        This page shows the current date and time using the systems implemented by the French First Republic.
+        The calendar was used from 1793 to 1805 and decimal time for about a year between 1794 and 1795.
+        Read more on <a href="https://en.wikipedia.org/wiki/French_Republican_calendar" target="_blank">Wikipedia</a>.
+    </p>
+
+    <h3>API</h3>
+    <p>
+        The API powering this site can be explored starting <a href="/api">here</a>, or through the rendered <a href="/docs">OpenAPI description</a>.
+    </p>
+    <p>
+        It is intentionally over-engineered to be used as an educational resource when teaching API design and REST principles.
+    </p>
+
+    <h3>Download</h3>
+    <p>
+        The underlying script can be downloaded from <a href="https://pypi.org/project/repcal/" target="_blank">PyPI</a> or <a href="https://github.com/dekadans/repcal" target="_blank">Github</a>.
+    </p>
+</div>
+<a href="https://tthe.se" target="_blank">tthe.se</a>
+{% endblock %}

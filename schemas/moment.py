@@ -26,10 +26,10 @@ def schema():
                             "$ref": link.url()
                         }
                     },
-                    "resource:date": {
+                    "repcal:date": {
                         "$ref": link.url()
                     },
-                    "resource:time": {
+                    "repcal:time": {
                         "$ref": link.url()
                     }
                 }

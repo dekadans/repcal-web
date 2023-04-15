@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1><em>{{name}}</em></h1>
+<p>The relation ("rel" attribute) indicates the semantic - the meaning - of a particular link.</p>
+<div id="intro">
+    {{text|safe}}
+</div>
+{% endblock %}

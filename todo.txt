@@ -1,6 +1,4 @@
 * error pages
-* relation descriptions
-* openapi + schemas
 * 404 for dates in the future and before calendar start
 * cors
 
@@ -11,11 +9,3 @@
     "href": "/date/{year}/{day}/{month}"
 }
 
-
-educational guidance:
-- linksets - https://datatracker.ietf.org/doc/rfc9264/
-    - Link Relation Types for Web Services - https://www.rfc-editor.org/rfc/rfc8631.html
-- hal
-- openapi
-- json schema
-- problem details

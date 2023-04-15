@@ -37,9 +37,16 @@ def schema():
                         "$ref": link.url(),
                         "description": "URI for human-readable service description (RFC 8631)."
                     },
-                    "operation:now": {
+                    "repcal:now": {
                         "$ref": link.url(),
-                        "description": "An operation in the API."
+                        "description": "Get the current (republican) date and time."
+                    },
+                    "repcal:educational": {
+                        "type": "array",
+                        "description": "A list of links to specifications and technologies used when implementing this API.",
+                        "items": {
+                            "$ref": link.url()
+                        }
                     }
                 }
             },

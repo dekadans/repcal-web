@@ -33,6 +33,10 @@ a, p {
     margin-bottom: 80px;
 }
 
+p#relation {
+    font-size: 14px;
+}
+
 @media screen and (max-width: 720px) {
     #intro {
         width: 80%;
