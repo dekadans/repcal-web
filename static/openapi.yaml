@@ -1,0 +1,241 @@
+openapi: 3.1.0
+info:
+  title: repcal.info
+  version: '2.0'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT.html'
+  contact:
+    name: Tomas Thelander
+    url: 'https://tthe.se'
+    email: tomas@tthe.se
+  description: Temp
+servers:
+  - url: 'https://repcal.info'
+tags:
+  - name: Resources
+    description: Resources
+paths:
+  /api:
+    get:
+      summary: Welcome!
+      description: desc
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiIndex'
+      operationId: get-api
+  /now:
+    get:
+      summary: Get current time
+      operationId: get-now
+      parameters:
+        - schema:
+            type: number
+            minimum: -1439
+            maximum: 1439
+            example: 60
+          in: query
+          name: offset
+          description: Specify offset as a positive or negative number of minutes from UTC.
+      description: Operation that will resolve and redirect to the Moment resource for the current date and time.
+      responses:
+        '302':
+          description: ''
+          headers:
+            Location:
+              schema:
+                type: string
+                example: /moment/12345/0
+              description: The location of the resolved resource.
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/moment/{timestamp}/{offset}':
+    parameters:
+      - schema:
+          type: integer
+        name: timestamp
+        in: path
+        required: true
+        description: UNIX timestamp
+      - schema:
+          type: number
+          minimum: -1439
+          maximum: 1439
+          example: 60
+        name: offset
+        in: path
+        required: true
+        description: Number of minutes from UTC
+    get:
+      summary: Moment
+      tags:
+        - Resources
+      responses:
+        '200':
+          $ref: '#/components/responses/MomentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: get-moment
+      description: The Moment resource represents a specific point in time and includes links to republican style Date and Time resources.
+  '/date/{year}/{month}/{day}':
+    parameters:
+      - schema:
+          type: integer
+          example: 2023
+        name: year
+        in: path
+        required: true
+        description: Year (Gregorian)
+      - schema:
+          type: integer
+          example: 2
+        name: month
+        in: path
+        required: true
+        description: Month (Gregorian)
+      - schema:
+          type: integer
+          example: 12
+        name: day
+        in: path
+        required: true
+        description: Day (Gregorian)
+    get:
+      summary: Date
+      description: date
+      tags:
+        - Resources
+      responses:
+        '200':
+          description: ''
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/RepublicanDate'
+        '404':
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: get-date
+  '/time/{hour}/{minute}/{second}':
+    parameters:
+      - schema:
+          type: integer
+          example: 20
+        name: hour
+        in: path
+        required: true
+        description: Hour (standard)
+      - schema:
+          type: integer
+          example: 49
+        name: minute
+        in: path
+        required: true
+        description: Minute (standard)
+      - schema:
+          type: integer
+          example: 12
+        name: second
+        in: path
+        required: true
+        description: Second (standard)
+    get:
+      summary: Time
+      description: time
+      tags:
+        - Resources
+      responses:
+        '200':
+          description: ''
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/RepublicanTime'
+        '404':
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: get-time
+components:
+  schemas:
+    ApiIndex:
+      $ref: '/meta/schema/api'
+    Moment:
+      $ref: '/meta/schema/moment'
+    RepublicanTime:
+      $ref: '/meta/schema/time'
+    RepublicanDate:
+      $ref: '/meta/schema/date'
+    Link:
+      $ref: '/meta/schema/link'
+    ProblemDetails:
+      title: Problem Details
+      type: object
+      description: |
+        Problem details representing an error that has occurred.
+        Follows the [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807) format.
+      examples:
+        - type: 'https://repcal.info/meta/errors/invalid_offset'
+          instance: 'https://repcal.info/meta/errors/invalid_offset/2cf1c733-90f2-49d2-a700-5be04efc3ddd'
+          status: 400
+          title: Bad Request
+          detail: The provided offset was invalid or out-of-bounds.
+      x-stoplight:
+        id: a39e635591f39
+      properties:
+        type:
+          type: string
+        instance:
+          type: string
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+      required:
+        - type
+        - instance
+        - status
+        - title
+        - detail
+  responses:
+    MomentResponse:
+      description: ''
+      content:
+        application/hal+json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Moment'
+              - type: object
+                properties:
+                  _embedded:
+                    type: object
+                    properties:
+                      'rel:date':
+                        $ref: '#/components/schemas/RepublicanDate'
+                      'rel:time':
+                        $ref: '#/components/schemas/RepublicanTime'
+          examples: [
+            {
+              "hello": "heeej"
+            }
+          ]

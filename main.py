@@ -4,10 +4,7 @@ from datetime import datetime, timezone, timedelta, date, time
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.exceptions import HTTPException, BadRequest, NotFound
 
-import errors
-import meta
-import resources
-import responses
+from . import errors, meta, resources, responses
 
 app = Flask(__name__)
 app.register_blueprint(errors.bp)
@@ -21,13 +18,13 @@ def start():
 
 
 @app.get('/api')
-def api_resource():
+def apiindex_resource():
     return responses.ApiIndexResponse().to_response()
 
 
 @app.route('/docs')
 def docs():
-    return 'docs'
+    return render_template('docs.html')
 
 
 @app.get('/now')

@@ -3,8 +3,8 @@ from typing import Dict
 
 from flask import jsonify
 
-from links import Link, Curie
-from resources import Resource, Date, Time, Moment, ApiIndex
+from .links import Link, Curie
+from .resources import Resource, Date, Time, Moment, ApiIndex
 
 
 class HALResponse:
@@ -15,9 +15,8 @@ class HALResponse:
         self.add_link(self._get_resource_link('self', self.primary))
         self.add_link(Link(
             rel='describedby',
-            endpoint='meta.schema',
-            media_type='application/schema+json',
-            params={'name': self.primary.type()}
+            endpoint='meta.schema_'+self.primary.type(),
+            media_type='application/schema+json'
         ))
 
     def _get_resource_link(self, rel: str, r: Resource) -> Link:
@@ -87,10 +86,5 @@ class ApiIndexResponse(HALResponse):
             endpoint='now_template',
             title='Get the current date and time in the French republican systems',
             templated=True
-        ))
-        self.add_link(Link(
-            rel='operation:paris',
-            endpoint='paris_lookup',
-            title='Get the current Paris Mean date and time'
         ))
 
