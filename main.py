@@ -2,6 +2,7 @@ import re
 from datetime import datetime, timezone, timedelta, date, time
 
 from flask import Flask, render_template, request, redirect, url_for
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException, BadRequest, NotFound
 
 from . import errors, meta, resources, responses
@@ -10,6 +11,7 @@ app = Flask(__name__)
 app.register_blueprint(errors.bp)
 app.register_blueprint(meta.bp)
 app.config['JSON_SORT_KEYS'] = False
+CORS(app)
 
 
 @app.route('/')
