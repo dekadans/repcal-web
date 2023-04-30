@@ -93,7 +93,7 @@ class Offset:
     def _extract(self, offset: str):
         result = re.match('^(-?\d{1,4})$', offset)
         if result is None:
-            raise errors.InvalidOffset()
+            raise BadRequest('The provided offset was invalid or out-of-bounds.')
 
         self._set_minutes(result.group(1))
 
@@ -103,6 +103,6 @@ class Offset:
 
         minutes = int(minutes)
         if not -1440 < minutes < 1440:
-            raise errors.InvalidOffset()
+            raise BadRequest('The provided offset was invalid or out-of-bounds.')
 
         self.min = minutes

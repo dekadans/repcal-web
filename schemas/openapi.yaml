@@ -46,9 +46,10 @@ paths:
       parameters:
         - schema:
             type: number
-            minimum: -1439
-            maximum: 1439
+            exclusiveMinimum: -1440
+            exclusiveMaximum: 1440
             example: 60
+
           in: query
           name: offset
           description: Specify offset as a positive or negative number of minutes from UTC.
@@ -78,8 +79,8 @@ paths:
         description: UNIX timestamp
       - schema:
           type: number
-          minimum: -1439
-          maximum: 1439
+          exclusiveMinimum: -1440
+          exclusiveMaximum: 1440
           example: 60
         name: offset
         in: path
@@ -217,8 +218,8 @@ components:
         Problem details representing an error that has occurred.
         Follows the [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807) format.
       examples:
-        - type: 'https://repcal.info/meta/errors/invalid_offset'
-          instance: 'https://repcal.info/meta/errors/invalid_offset/2cf1c733-90f2-49d2-a700-5be04efc3ddd'
+        - type: 'https://webconcepts.info/concepts/http-status-code/400'
+          instance: 'https://repcal.info/meta/errors/400/2cf1c733-90f2-49d2-a700-5be04efc3ddd'
           status: 400
           title: Bad Request
           detail: The provided offset was invalid or out-of-bounds.
@@ -227,8 +228,10 @@ components:
       properties:
         type:
           type: string
+          format: uri
         instance:
           type: string
+          format: uri
         status:
           type: integer
         title:
