@@ -99,7 +99,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
       operationId: get-moment
-      description: The Moment resource represents a specific point in time and includes links to republican style Date and Time resources.
+      description: |
+        The Moment resource represents a specific point in time.
+        
+        The HAL response by the API will embed the related republican-style Date and Time resources.
   '/date/{year}/{month}/{day}':
     parameters:
       - schema:
@@ -125,7 +128,7 @@ paths:
         description: Day (Gregorian)
     get:
       summary: Date
-      description: date
+      description: The Date resource contains information about a given date in the republican calendar.
       tags:
         - Resources
       responses:
@@ -172,7 +175,7 @@ paths:
         description: Second (standard)
     get:
       summary: Time
-      description: time
+      description: The Time resource contains information about a time of day in a decimal format.
       tags:
         - Resources
       responses:
