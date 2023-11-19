@@ -7,41 +7,20 @@ def schema():
         "type": "object",
         "description": "A specific point in time.",
         "properties": {
-            "_links": {
-                "type": "object",
-                "required": [
-                    "self",
-                    "describedby"
-                ],
-                "properties": {
-                    "self": {
-                        "$ref": link.url()
-                    },
-                    "describedby": {
-                        "$ref": link.url()
-                    },
-                    "curies": {
-                        "type": "array",
-                        "items": {
-                            "$ref": link.url()
-                        }
-                    },
-                    "repcal:date": {
-                        "$ref": link.url()
-                    },
-                    "repcal:time": {
-                        "$ref": link.url()
-                    }
-                }
-            },
+            "_links": link.schema(),
             "iso": {
                 "type": "string",
                 "format": "date-time",
                 "description": "ISO 8601 representation of the Moment."
+            },
+            "_embedded": {
+                "type": "object",
+                "description": "Embedded date and time resources."
             }
         },
         "required": [
             "_links",
+            "_embedded",
             "iso"
         ]
     }

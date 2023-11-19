@@ -10,7 +10,7 @@ from . import errors, meta, resources, responses
 app = Flask(__name__)
 app.register_blueprint(errors.bp)
 app.register_blueprint(meta.bp)
-app.config['JSON_SORT_KEYS'] = False
+app.json.sort_keys = False
 CORS(app)
 
 

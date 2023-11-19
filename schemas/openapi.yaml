@@ -209,8 +209,6 @@ components:
       $ref: '/meta/schema/time'
     RepublicanDate:
       $ref: '/meta/schema/date'
-    Link:
-      $ref: '/meta/schema/link'
     ProblemDetails:
       title: Problem Details
       type: object

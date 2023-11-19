@@ -7,21 +7,7 @@ def schema():
         "type": "object",
         "description": "Time information in the French Republican style.",
         "properties": {
-            "_links": {
-                "type": "object",
-                "required": [
-                    "self",
-                    "describedby"
-                ],
-                "properties": {
-                    "self": {
-                        "$ref": link.url()
-                    },
-                    "describedby": {
-                        "$ref": link.url()
-                    }
-                }
-            },
+            "_links": link.schema(),
             "texts": {
                 "type": "object",
                 "required": [
