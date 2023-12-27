@@ -17,20 +17,11 @@ class Time(Resource):
             'second': self.time.second
         }
 
-    def decimal_format(self) -> str:
-        if max(self.decimal.hour, self.decimal.minute, self.decimal.second) == 0:
-            return '0'
-
-        h = self.decimal.hour
-        m = f'{self.decimal.minute:02}' if max(self.decimal.minute, self.decimal.second) > 0 else ''
-        s = f'{self.decimal.second:02}' if self.decimal.second > 0 else ''
-        return f'0,{h}{m}{s}'.rstrip('0')
-
     def to_dict(self) -> dict:
         return {
             "texts": {
                 "default": str(self.decimal),
-                "decimal": self.decimal_format()
+                "decimal": self.decimal.decimal
             },
             "attributes": {
                 "hour": self.decimal.hour,

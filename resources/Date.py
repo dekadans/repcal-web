@@ -7,8 +7,6 @@ class Date(Resource):
     def __init__(self, d: date) -> None:
         self.date = d
         self.republican = RepublicanDate.from_gregorian(d)
-        rep_date_str = str(self.republican)
-        self.formatted = rep_date_str[0].upper() + rep_date_str[1:]
 
     def type(self) -> str: return 'date'
 
@@ -22,23 +20,23 @@ class Date(Resource):
     def to_dict(self) -> dict:
         return {
             "texts": {
-                "default": self.formatted
+                "default": str(self.republican)
             },
             "attributes": {
                 "complementary": self.republican.is_sansculottides(),
                 "day": {
-                    "name": self.republican.get_weekday(),
-                    "number_in_week": self.republican.week_day_index+1,
+                    "name": self.republican.get_day_name(),
+                    "number_in_week": self.republican.get_day_in_week(),
                     "number_in_month": self.republican.get_day()
                 },
                 "week": {
-                    "number_in_month": self.republican.get_week_number(),
-                    "number_in_year": (self.republican.get_week_number() + self.republican.month_index * 3)
-                } if not self.republican.is_sansculottides() else None,
+                    "number_in_month": self.republican.get_week(),
+                    "number_in_year": self.republican.get_week_in_year()
+                },
                 "month": {
-                    "name": self.republican.get_month(),
-                    "number": self.republican.month_index+1
-                } if not self.republican.is_sansculottides() else None,
+                    "name": self.republican.get_month_name() if not self.republican.is_sansculottides() else 'Jours complémentaires',
+                    "number": self.republican.get_month()
+                },
                 "year": {
                     "arabic": self.republican.get_year_arabic(),
                     "roman": self.republican.get_year_roman()

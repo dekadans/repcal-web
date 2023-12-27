@@ -59,11 +59,8 @@ def schema():
                         }
                     },
                     "week": {
-                        "type": [
-                            "object",
-                            "null"
-                        ],
-                        "description": "Information about this date's week. NULL if we're in complementary days.",
+                        "type": "object",
+                        "description": "Information about this date's week.",
                         "required": [
                             "number_in_month",
                             "number_in_year"
@@ -77,16 +74,13 @@ def schema():
                             "number_in_year": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "maximum": 36
+                                "maximum": 37
                             }
                         }
                     },
                     "month": {
-                        "type": [
-                            "object",
-                            "null"
-                        ],
-                        "description": "Information about this date's month. NULL if we're in complementary days.",
+                        "type": "object",
+                        "description": "Information about this date's month.",
                         "required": [
                             "name",
                             "number"
@@ -98,7 +92,7 @@ def schema():
                             "number": {
                                 "type": "number",
                                 "minimum": 1,
-                                "maximum": 12
+                                "maximum": 13
                             }
                         }
                     },
