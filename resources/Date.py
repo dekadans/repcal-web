@@ -1,12 +1,14 @@
 from . import Resource
 from datetime import date
 from repcal import RepublicanDate
+from ..celebration import find_celebration
 
 
 class Date(Resource):
     def __init__(self, d: date) -> None:
         self.date = d
         self.republican = RepublicanDate.from_gregorian(d)
+        self.celebration = find_celebration(self.republican)
 
     def type(self) -> str: return 'date'
 
@@ -27,7 +29,8 @@ class Date(Resource):
                 "day": {
                     "name": self.republican.get_day_name(),
                     "number_in_week": self.republican.get_day_in_week(),
-                    "number_in_month": self.republican.get_day()
+                    "number_in_month": self.republican.get_day(),
+                    "number_in_year": self.republican.get_day_in_year()
                 },
                 "week": {
                     "number_in_month": self.republican.get_week(),
@@ -40,6 +43,9 @@ class Date(Resource):
                 "year": {
                     "arabic": self.republican.get_year_arabic(),
                     "roman": self.republican.get_year_roman()
+                },
+                "celebrating": {
+                    "name": self.celebration.name
                 }
             }
         }

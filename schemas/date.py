@@ -55,6 +55,11 @@ def schema():
                                 "type": "integer",
                                 "minimum": 1,
                                 "maximum": 30
+                            },
+                            "number_in_year": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 366
                             }
                         }
                     },

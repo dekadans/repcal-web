@@ -58,7 +58,7 @@ def date_resource(year, month, day):
     try:
         d = date(year, month, day)
         r = resources.Date(d)
-        return responses.HALResponse(r).to_response()
+        return responses.DateResponse(r).to_response()
     except ValueError:
         raise NotFound('This URI does not correspond to a valid Date resource.')
 
