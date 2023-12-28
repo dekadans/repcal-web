@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: repcal.info
-  version: '2.0'
+  version: '2.1'
   license:
     name: MIT
     url: 'https://spdx.org/licenses/MIT.html'
@@ -129,7 +129,10 @@ paths:
         description: Day (Gregorian)
     get:
       summary: Date
-      description: The Date resource contains information about a given date in the republican calendar.
+      description: |-
+        The Date resource contains information about a given date in the republican calendar.
+        
+        It will also include links to Wikipedia with more information about what the day is celebrating.
       tags:
         - Resources
       responses:
@@ -142,8 +145,25 @@ paths:
               example:
                 _links: {}
                 texts:
-                  default: 'Sextidi 26 germinal an CCXXXI'
-                attributes: {}
+                  default: 'Sextidi 6 germinal an CCXXXI'
+                attributes:
+                  complementary: false
+                  day:
+                    name: 'Sextidi'
+                    number_in_week: 6
+                    number_in_month: 6
+                    number_in_year: 186
+                  week:
+                    number_in_month: 1
+                    number_in_year: 19
+                  month:
+                    name: 'Germinal'
+                    number: 7
+                  year:
+                    arabic: 231
+                    roman: 'CCXXXI'
+                  celebrating:
+                    name: 'Chard'
         '404':
           description: Not Found
           content:
@@ -191,7 +211,10 @@ paths:
                 texts:
                   default: '8:99:40'
                   decimal: '0,8994'
-                attributes: {}
+                attributes:
+                  hour: 8
+                  minute: 99
+                  second: 40
         '404':
           description: Not Found
           content:
