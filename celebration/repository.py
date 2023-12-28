@@ -9,10 +9,22 @@ class Subject:
         self.wiki_id = wiki_id
 
 
-def find(republican_date: RepublicanDate) -> Subject:
+def get_data():
     file_data = pkgutil.get_data(__name__, 'data.json')
-    data = json.loads(file_data)
+    return json.loads(file_data)
+
+
+def find(republican_date: RepublicanDate) -> Subject:
+    data = get_data()
 
     celebration = data[republican_date.month_index][republican_date.month_day_index]
 
     return Subject(celebration.get('label'), celebration.get('wiki'))
+
+
+def get_all():
+    data = get_data()
+    flattened = [
+        day for month in data for day in month
+    ]
+    return flattened
