@@ -21,7 +21,8 @@ def start():
 
 @app.get('/api')
 def apiindex_resource():
-    return responses.ApiIndexResponse().to_response()
+    r = resources.ApiIndex()
+    return responses.make_response(r).to_response()
 
 
 @app.route('/docs')
@@ -49,7 +50,8 @@ def moment_resource(timestamp: int, offset: str):
     offset = Offset(offset)
     tz = timezone(offset.to_timedelta())
     dt = datetime.fromtimestamp(timestamp, tz)
-    return responses.MomentResponse(dt).to_response()
+    r = resources.Moment(dt)
+    return responses.make_response(r).to_response()
 
 
 @app.get('/date/<int:year>/<int:month>/<int:day>')
@@ -58,7 +60,7 @@ def date_resource(year, month, day):
     try:
         d = date(year, month, day)
         r = resources.Date(d)
-        return responses.DateResponse(r).to_response()
+        return responses.make_response(r).to_response()
     except ValueError:
         raise NotFound('This URI does not correspond to a valid Date resource.')
 
@@ -68,7 +70,7 @@ def time_resource(hour, minute, second):
     try:
         t = time(hour, minute, second)
         dt = resources.Time(t)
-        return responses.HALResponse(dt).to_response()
+        return responses.make_response(dt).to_response()
     except ValueError:
         raise NotFound('This URI does not correspond to a valid Time resource.')
 

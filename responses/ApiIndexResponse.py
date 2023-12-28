@@ -4,8 +4,8 @@ from .HALResponse import HALResponse
 
 
 class ApiIndexResponse(HALResponse):
-    def __init__(self) -> None:
-        super().__init__(ApiIndex())
+    def __init__(self, i: ApiIndex) -> None:
+        super().__init__(i)
         self.add_curie(Curie('repcal'))
         self.add_link(Link(
             rel='help',

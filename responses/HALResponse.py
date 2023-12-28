@@ -2,6 +2,7 @@ from ..resources import Resource
 from .links import Link, Curie
 from typing import Dict
 from flask import jsonify
+from .factory import make_response
 
 
 class HALResponse:
@@ -12,9 +13,10 @@ class HALResponse:
         self.add_link(self._get_resource_link('self', self.primary))
         self.add_link(Link(
             rel='describedby',
-            endpoint='meta.schema_'+self.primary.type(),
+            endpoint='meta.schema_' + self.primary.type(),
             media_type='application/schema+json'
         ))
+        self.is_embedded = False
 
     def _get_resource_link(self, rel: str, r: Resource) -> Link:
         return Link(
@@ -44,13 +46,19 @@ class HALResponse:
         self.links[link.rel].append(link.parse())
 
     def to_dict(self) -> dict:
+        if self.is_embedded and 'curies' in self.links:
+            del self.links['curies']
+
         resp = {
             '_links': self.links,
             **self.primary.to_dict()
         }
 
         if len(self.embedded) > 0:
-            resp['_embedded'] = {key: HALResponse(value).to_dict() for (key, value) in self.embedded.items()}
+            resp['_embedded'] = {
+                key: make_response(value).as_embedded().to_dict()
+                for (key, value) in self.embedded.items()
+            }
 
         return resp
 
@@ -58,3 +66,7 @@ class HALResponse:
         resp = jsonify(self.to_dict())
         resp.content_type = "application/hal+json"
         return resp
+
+    def as_embedded(self):
+        self.is_embedded = True
+        return self
