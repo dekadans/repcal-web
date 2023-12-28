@@ -45,6 +45,7 @@ class Date(Resource):
                     "roman": self.republican.get_year_roman()
                 },
                 "celebrating": {
+                    "id": self.celebration.uri,
                     "name": self.celebration.name
                 }
             }

@@ -11,14 +11,14 @@ class DateResponse(HALResponse):
         self.add_link(Link(
             rel='repcal:celebrating',
             name='wikipedia',
-            endpoint='https://en.wikipedia.org/wiki/' + d.celebration.wiki_id,
+            endpoint=d.celebration.wiki_html,
             media_type='text/html',
             external=True
         ))
         self.add_link(Link(
             rel='repcal:celebrating',
             name='wikipedia-api',
-            endpoint='https://en.wikipedia.org/api/rest_v1/page/summary/' + d.celebration.wiki_id,
+            endpoint=d.celebration.wiki_json,
             media_type='application/json',
             external=True
         ))
