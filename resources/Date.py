@@ -1,14 +1,12 @@
 from . import Resource
 from datetime import date
 from repcal import RepublicanDate
-from ..celebration import find_celebration
 
 
 class Date(Resource):
     def __init__(self, d: date) -> None:
         self.date = d
         self.republican = RepublicanDate.from_gregorian(d)
-        self.celebration = find_celebration(self.republican)
 
     def type(self) -> str: return 'date'
 

@@ -1,0 +1,80 @@
+[
+  {
+    "month": 0,
+    "id": "Q1975981",
+    "label": "Vintage",
+    "wiki": "Vintage"
+  },
+  {
+    "month": 1,
+    "id": "Q37477",
+    "label": "Fog",
+    "wiki": "Fog"
+  },
+  {
+    "month": 2,
+    "id": "Q4590598",
+    "label": "Frost",
+    "wiki": "Frost"
+  },
+  {
+    "month": 3,
+    "id": "Q7561",
+    "label": "Snow",
+    "wiki": "Snow"
+  },
+  {
+    "month": 4,
+    "id": "Q7925",
+    "label": "Rain",
+    "wiki": "Rain"
+  },
+  {
+    "month": 5,
+    "id": "Q8094",
+    "label": "Wind",
+    "wiki": "Wind"
+  },
+  {
+    "month": 6,
+    "id": "Q193838",
+    "label": "Germination",
+    "wiki": "Germination"
+  },
+  {
+    "month": 7,
+    "id": "Q506",
+    "label": "Flowering",
+    "wiki": "Flower"
+  },
+  {
+    "month": 8,
+    "id": "Q7777019",
+    "label": "Meadows",
+    "wiki": "Meadow"
+  },
+  {
+    "month": 9,
+    "id": "Q213753",
+    "label": "Harvest",
+    "wiki": "Harvest"
+  },
+  {
+    "month": 10,
+    "id": "Q44432",
+    "label": "Heat",
+    "wiki": "Heat"
+  },
+  {
+    "month": 11,
+    "id": "Q3314483",
+    "label": "Fruits",
+    "wiki": "Fruit"
+  },
+  {
+    "month": 12,
+    "id": "Q1935018",
+    "label": "Complementary days",
+    "wiki": "Sansculottides"
+  }
+]

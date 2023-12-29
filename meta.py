@@ -52,7 +52,8 @@ def relation(rel: str):
         'now': 'The <em>now</em> link will resolve to a resource representing the current date and time.',
         'date': 'This link will resolve to a related <em>date</em> resource.',
         'time': 'This link will resolve to a related <em>time</em> resource.',
-        'observation': 'Links to resources related to this day\'s observation.'
+        'meta-day': 'External links to resources related to the plant, animal, object or concept that this day is commemorating.',
+        'meta-month': 'External links to resources related to the natural phenomenon this month was named for.'
     }
 
     if rel in rels:

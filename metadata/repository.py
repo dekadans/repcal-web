@@ -11,13 +11,18 @@ class Subject:
         self.wiki_json = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + wiki_page
 
 
-def get_data():
-    file_data = pkgutil.get_data(__name__, 'data.json')
+def get_observation_data():
+    file_data = pkgutil.get_data(__name__, 'data/days.json')
     return json.loads(file_data)
 
 
-def find(republican_date: RepublicanDate) -> Subject:
-    data = get_data()
+def get_month_data():
+    file_data = pkgutil.get_data(__name__, 'data/months.json')
+    return json.loads(file_data)
+
+
+def find_observation(republican_date: RepublicanDate) -> Subject:
+    data = get_observation_data()
 
     celebration = data[republican_date.month_index][republican_date.month_day_index]
 
@@ -28,8 +33,20 @@ def find(republican_date: RepublicanDate) -> Subject:
     )
 
 
-def get_all():
-    data = get_data()
+def find_month(republican_date: RepublicanDate) -> Subject:
+    data = get_month_data()
+
+    celebration = data[republican_date.month_index]
+
+    return Subject(
+        celebration.get('label'),
+        celebration.get('id'),
+        celebration.get('wiki')
+    )
+
+
+def get_all_observations():
+    data = get_observation_data()
     flattened = [
         day for month in data for day in month
     ]
