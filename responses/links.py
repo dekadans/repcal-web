@@ -4,7 +4,7 @@ from flask import url_for
 
 
 class Link:
-    def __init__(self, rel: str, endpoint: str, media_type: str = 'application/hal+json', params=None,
+    def __init__(self, rel: str, endpoint: str, media_type: str | None = 'application/hal+json', params=None,
                  external=False, **kwargs) -> None:
         self.rel = rel
         self.endpoint = endpoint
@@ -21,9 +21,11 @@ class Link:
             if self.kwargs.get('templated'):
                 href = unquote(href)
 
+        if self.media_type is not None:
+            self.kwargs['type'] = self.media_type
+
         return {
             'href': href,
-            'type': self.media_type,
             **self.kwargs
         }
 

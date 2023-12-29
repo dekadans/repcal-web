@@ -27,8 +27,7 @@ def schema():
                     "day",
                     "week",
                     "month",
-                    "year",
-                    "celebrating"
+                    "year"
                 ],
                 "properties": {
                     "complementary": {
@@ -115,18 +114,6 @@ def schema():
                                 "type": "integer"
                             },
                             "roman": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "celebrating": {
-                        "type": "object",
-                        "required": [
-                            "name"
-                        ],
-                        "description": "Information about what this day is observing.",
-                        "properties": {
-                            "name": {
                                 "type": "string"
                             }
                         }

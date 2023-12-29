@@ -8,17 +8,30 @@ class DateResponse(HALResponse):
         super().__init__(d)
 
         self.add_curie(Curie('repcal'))
+
+        rel_observe = 'repcal:observation'
+
         self.add_link(Link(
-            rel='repcal:celebrating',
-            name='wikipedia',
-            endpoint=d.celebration.wiki_html,
-            media_type='text/html',
+            rel=rel_observe,
+            name='entity',
+            endpoint=d.celebration.uri,
+            media_type=None,
             external=True
         ))
         self.add_link(Link(
-            rel='repcal:celebrating',
-            name='wikipedia-api',
+            rel=rel_observe,
+            name='ui',
+            endpoint=d.celebration.wiki_html,
+            media_type='text/html',
+            external=True,
+            hreflang='en',
+            title=d.celebration.name
+        ))
+        self.add_link(Link(
+            rel=rel_observe,
+            name='data',
             endpoint=d.celebration.wiki_json,
             media_type='application/json',
-            external=True
+            external=True,
+            hreflang='en'
         ))
