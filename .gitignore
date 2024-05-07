@@ -3,3 +3,4 @@ venv
 .idea
 run.sh
 temp.py
+.DS_Store
