@@ -2,11 +2,78 @@
 
 {% block head %}
 {{ super() }}
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-<script src="/static/time.js" defer></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+    async function getData() {
+        const offset = (new Date()).getTimezoneOffset() * -1;
+        return (await fetch('/now?offset=' + offset)).json();
+    }
+
+    document.addEventListener('alpine:init', async () => {
+        Alpine.data('now', () => ({
+            date: 'Loading...',
+            hour: 0,
+            minute: 0,
+            second: 0,
+            interval: null,
+
+            init() {
+                this.sync();
+
+                setInterval(() => {
+                    this.tick();
+                }, 864);
+
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') {
+                        this.sync();
+                    }
+                });
+            },
+
+            sync() {
+                getData().then(data => {
+                    const rep_time = data._embedded['repcal:time'];
+                    const rep_date = data._embedded['repcal:date'];
+                    this.hour = rep_time.attributes.hour;
+                    this.minute = rep_time.attributes.minute;
+                    this.second = rep_time.attributes.second;
+                    this.date = rep_date.texts.default;
+                });
+            },
+
+            tick() {
+                this.second++;
+
+                if (this.second === 100) {
+                    this.second = 0;
+                    this.minute++;
+
+                    if (this.minute === 100) {
+                        this.minute = 0;
+                        this.hour++;
+
+                        if (this.hour === 10) {
+                            this.hour = 0;
+                            this.sync();
+                        }
+                    }
+                }
+            }
+        }));
+    });
+</script>
+
 {% endblock %}
 {% block content %}
-<div id="app"></div>
+<div id="app" x-data="now">
+    <h1 x-text="date"></h1>
+    <h2>
+        <span x-text="hour"></span>:<span x-text="minute"></span>:<span x-text="second"></span>
+    </h2>
+</div>
 <div id="intro">
     <h3>What is this?</h3>
     <p>
