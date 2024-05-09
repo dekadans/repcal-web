@@ -162,8 +162,6 @@ paths:
                   year:
                     arabic: 231
                     roman: 'CCXXXI'
-                  celebrating:
-                    name: 'Chard'
         '404':
           description: Not Found
           content:
@@ -278,9 +276,9 @@ components:
                   _embedded:
                     type: object
                     properties:
-                      'rel:date':
+                      'repcal:date':
                         $ref: '#/components/schemas/RepublicanDate'
-                      'rel:time':
+                      'repcal:time':
                         $ref: '#/components/schemas/RepublicanTime'
           example:
             _links: {}

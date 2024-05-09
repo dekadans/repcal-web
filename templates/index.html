@@ -8,7 +8,33 @@
 <script>
     async function getData() {
         const offset = (new Date()).getTimezoneOffset() * -1;
-        return (await fetch('/now?offset=' + offset)).json();
+        const response = await fetch('/now?offset=' + offset);
+        const data = await response.json();
+
+        return {
+            ...parseDate(data._embedded['repcal:date']),
+            ...parseTime(data._embedded['repcal:time'])
+        };
+    }
+
+    function parseDate(api_date) {
+        const links = api_date._links['repcal:meta-day'];
+        const uiLink = links.find(l => l.name === 'ui');
+
+        return {
+            date: api_date.texts.default,
+            celebrating: uiLink.title,
+            wiki: uiLink.href,
+            wiki_api: links.find(l => l.name === 'data').href
+        }
+    }
+
+    function parseTime(api_time) {
+        return {
+            hour: api_time.attributes.hour,
+            minute: api_time.attributes.minute,
+            second: api_time.attributes.second
+        };
     }
 
     document.addEventListener('alpine:init', async () => {
@@ -17,7 +43,9 @@
             hour: 0,
             minute: 0,
             second: 0,
-            interval: null,
+            celebrating: '...',
+            wiki: '#',
+            wiki_api: '#',
 
             init() {
                 this.sync();
@@ -33,30 +61,20 @@
                 });
             },
 
-            sync() {
-                getData().then(data => {
-                    const rep_time = data._embedded['repcal:time'];
-                    const rep_date = data._embedded['repcal:date'];
-                    this.hour = rep_time.attributes.hour;
-                    this.minute = rep_time.attributes.minute;
-                    this.second = rep_time.attributes.second;
-                    this.date = rep_date.texts.default;
-                });
+            async sync() {
+                Object.assign(this, await getData());
             },
 
             tick() {
-                this.second++;
+                this.second = (this.second + 1) % 100;
 
-                if (this.second === 100) {
-                    this.second = 0;
-                    this.minute++;
+                if (this.second === 0) {
+                    this.minute = (this.minute + 1) % 100;
 
-                    if (this.minute === 100) {
-                        this.minute = 0;
-                        this.hour++;
+                    if (this.minute === 0) {
+                        this.hour = (this.hour + 1) % 10;
 
-                        if (this.hour === 10) {
-                            this.hour = 0;
+                        if (this.hour === 0) {
                             this.sync();
                         }
                     }
@@ -68,29 +86,28 @@
 
 {% endblock %}
 {% block content %}
+
+
 <div id="app" x-data="now">
     <h1 x-text="date"></h1>
     <h2>
         <span x-text="hour"></span>:<span x-text="minute"></span>:<span x-text="second"></span>
     </h2>
-</div>
-<div id="intro">
-    <h3>What is this?</h3>
-    <p>
-        This page shows the current date and time using the systems implemented by the French First Republic.
-        The calendar was used from 1793 to 1805 and decimal time for about a year between 1794 and 1795.
-        Read more on <a href="https://en.wikipedia.org/wiki/French_Republican_calendar" target="_blank">Wikipedia</a>.
-    </p>
 
-    <h3>API</h3>
-    <p>
-        The API powering this site can be explored starting <a href="/api">here</a>, or through the rendered <a href="/docs">OpenAPI description</a>.
-    </p>
-
-    <h3>Download</h3>
-    <p>
-        The underlying script can be downloaded from <a href="https://pypi.org/project/repcal/" target="_blank">PyPI</a> or <a href="https://github.com/dekadans/repcal" target="_blank">Github</a>.
-    </p>
+    <div id="celebration">
+        <h3>Celebrating <a :href="wiki" target="_blank"><span x-text="celebrating"></span></a>.</h3>
+        <hr>
+        <div id="info">
+            <p>
+                This page shows the current date and time using the systems implemented by the French First Republic.
+                The calendar was used from 1793 to 1805 and decimal time for about a year between 1794 and 1795.
+            </p>
+            <p>
+                Each day observes an everyday object&mdash;like a plant, animal or tool&mdash;common in the rural economy of France
+                in the 18th century.
+            </p>
+        </div>
+    </div>
 </div>
-<a href="https://tthe.se" target="_blank">tthe.se</a>
+
 {% endblock %}

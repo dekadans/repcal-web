@@ -1,7 +1,13 @@
 body {
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    color: #000000;
 }
+
+a, p {
+    color: #000000;
+}
+
 h1 {
     font-size: 2.5rem;
     margin-bottom: 0;
@@ -16,29 +22,58 @@ h2 {
 h3 {
     margin: 20px 0;
     font-weight: 400;
-}
-a, p {
-    color: #000000;
-    font-size: 11px;
-    font-weight: 300;
-}
-#intro {
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-    padding: 1rem;
-    width: 40%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 100px;
-    margin-bottom: 80px;
+    font-size: 1.2rem;
 }
 
-p#relation {
-    font-size: 14px;
+#menu h1 {
+    display: inline-block;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+#menu ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+#menu li {
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+}
+
+#menu li:before {
+    content: "•";
+    margin-right: 0.3rem;
+}
+
+#menu a {
+    text-decoration: none;
+}
+#menu a.active {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+}
+
+
+#info {
+    font-size: 0.7rem;
+    font-weight: 300;
+}
+#celebration {
+    width: 40%;
+    margin: 5rem auto;
+}
+
+#celebration hr {
+    color: #ccc;
+    border: none;
+    border-top: 1px #ccc solid;
 }
 
 @media screen and (max-width: 720px) {
-    #intro {
+    #info {
         width: 80%;
     }
 }
