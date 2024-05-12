@@ -25,6 +25,19 @@ h3 {
     font-size: 1.2rem;
 }
 
+section {
+    width: 50%;
+    margin: auto;
+}
+
+@media screen and (max-width: 980px) {
+    section {
+        width: 95%;
+    }
+}
+
+
+
 #menu h1 {
     display: inline-block;
     font-size: 0.9rem;
@@ -57,13 +70,10 @@ h3 {
 }
 
 
-#info {
-    font-size: 0.7rem;
-    font-weight: 300;
-}
+
 #celebration {
     width: 40%;
-    margin: 5rem auto;
+    margin-top: 5rem;
 }
 
 #celebration hr {
@@ -71,9 +81,42 @@ h3 {
     border: none;
     border-top: 1px #ccc solid;
 }
+#info {
+    font-size: 0.7rem;
+    font-weight: 300;
+}
 
-@media screen and (max-width: 720px) {
-    #info {
-        width: 80%;
-    }
+
+fieldset {
+    margin: 4rem 0;
+    text-align: left;
+}
+
+details {
+    margin: 15px 0;
+    padding: 5px 10px;
+    background-color: #f4f4f4;
+    font-size: 0.9rem;
+}
+
+summary {
+    cursor: pointer;
+    font-size: 0.7rem;
+}
+
+label {
+    display: block;
+}
+
+input {
+    padding: 0.5rem 10px;
+}
+
+
+table {
+    width: 100%;
+}
+
+tr td:last-child {
+    text-align: right;
 }

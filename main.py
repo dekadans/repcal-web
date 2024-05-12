@@ -19,6 +19,11 @@ def start():
     return render_template('index.html')
 
 
+@app.route('/details')
+def convert():
+    return render_template('details.html')
+
+
 @app.get('/api')
 def apiindex_resource():
     r = resources.ApiIndex()

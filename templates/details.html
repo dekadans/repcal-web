@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+{% block content %}
+
+<section>
+    <fieldset>
+        <legend>Republican Calendar</legend>
+        <table>
+            <tbody>
+                <tr>
+                    <td><input type="date" id="rep_date"></td>
+                    <td><input type="button" value="Convert"></td>
+                </tr>
+            </tbody>
+        </table>
+        <details>
+            <summary>About</summary>
+            <p>Hello</p>
+        </details>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Decimal Time</legend>
+        <table>
+            <tbody>
+            <tr>
+                <td><input type="time" id="rep_time"></td>
+                <td><input type="button" value="Convert"></td>
+            </tr>
+            </tbody>
+        </table>
+        <details>
+            <summary>About</summary>
+            <p>Hello</p>
+        </details>
+    </fieldset>
+</section>
+
+{% endblock %}
