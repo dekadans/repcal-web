@@ -3,23 +3,37 @@
 {% block head %}
 {{ super() }}
 
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dateDetails', dateDetailsApp);
+    });
+</script>
+
 {% endblock %}
 {% block content %}
 
 <section>
-    <fieldset>
+    <fieldset x-data="dateDetails">
         <legend>Republican Calendar</legend>
         <table>
             <tbody>
                 <tr>
-                    <td><input type="date" id="rep_date"></td>
-                    <td><input type="button" value="Convert"></td>
+                    <td><input type="date" id="rep_date" x-model="input"></td>
+                    <td><input type="button" value="Convert" @click="convert"></td>
                 </tr>
             </tbody>
         </table>
         <details>
             <summary>About</summary>
-            <p>Hello</p>
+            <p>The calendar was used from 1793 to 1805...</p>
+
+            <p>
+                Each day observes an everyday object&mdash;like a plant, animal or tool&mdash;common in the rural economy of France
+                in the 18th century.
+            </p>
+            <p>
+                Read more on <a href="https://en.wikipedia.org/wiki/French_Republican_calendar">Wikipedia</a>.
+            </p>
         </details>
     </fieldset>
 
@@ -29,14 +43,14 @@
         <table>
             <tbody>
             <tr>
-                <td><input type="time" id="rep_time"></td>
+                <td><input type="time" step="1" id="rep_time"></td>
                 <td><input type="button" value="Convert"></td>
             </tr>
             </tbody>
         </table>
         <details>
             <summary>About</summary>
-            <p>Hello</p>
+            <p>decimal time was used for about a year (six months) between 1794 and 1795</p>
         </details>
     </fieldset>
 </section>
