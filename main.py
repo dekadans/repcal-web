@@ -26,8 +26,9 @@ def convert():
 
 @app.get('/api')
 def apiindex_resource():
-    r = resources.ApiIndex()
-    return responses.make_response(r).to_response()
+    resp = responses.make_response(resources.ApiIndex()).to_response()
+    resp.headers.add("Cache-Control", "max-age=3600, public")
+    return resp
 
 
 @app.route('/docs')
@@ -70,6 +71,11 @@ def date_resource(year, month, day):
         raise NotFound('This URI does not correspond to a valid Date resource.')
 
 
+@app.get('/date{/year:4,month:2,day:2}')
+def date_template():
+    raise NotFound()
+
+
 @app.get('/time/<int:hour>/<int:minute>/<int:second>')
 def time_resource(hour, minute, second):
     try:
@@ -78,6 +84,11 @@ def time_resource(hour, minute, second):
         return responses.make_response(dt).to_response()
     except ValueError:
         raise NotFound('This URI does not correspond to a valid Time resource.')
+
+
+@app.get('/time{/hour:2,minute:2,second:2}')
+def time_template():
+    raise NotFound()
 
 
 @app.errorhandler(HTTPException)

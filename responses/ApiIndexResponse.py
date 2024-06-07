@@ -32,4 +32,16 @@ class ApiIndexResponse(HALResponse):
             title='Get the current date and time in the French republican systems',
             templated=True
         ))
+        self.add_link(Link(
+            rel='repcal:date',
+            endpoint='date_template',
+            title='Resolve a date to its French Republican counterpart.',
+            templated=True
+        ))
+        self.add_link(Link(
+            rel='repcal:time',
+            endpoint='time_template',
+            title='Resolve a time of day to its decimal counterpart.',
+            templated=True
+        ))
 

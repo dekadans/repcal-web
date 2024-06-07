@@ -1,18 +1,23 @@
 openapi: 3.1.0
 info:
-  title: repcal.info
-  version: '2.1'
+  title: French Republican Calendar
+  version: '2.2'
   license:
     name: MIT
     url: 'https://spdx.org/licenses/MIT.html'
   contact:
     name: Tomas Thelander
     url: 'https://tthe.se'
-    email: tomas@tthe.se
   description: |
-    Welcome to the API for Repcal.info.
+    Welcome to the API for Repcal.info: an API for accessing datetime data in the styles used by the French First Republic.
     
-    As this is a hypermedia API, it can be explored by starting at the [Index resource](/operations/get-api).
+    This API is based on the [HAL](https://datatracker.ietf.org/doc/html/draft-kelly-json-hal) media type
+    for hypermedia APIs. This means, among other things, that in addition to this OpenAPI document
+    there's also an [Index resource](/operations/get-api) that lists operations and related resources.
+    
+    Another good starting point is the operation for getting [the current time](/operations/get-now).
+    
+    More information about the French Republican Calendar in general can be found at [the main site](https://repcal.info).
 servers:
   - url: 'https://repcal.info'
 tags:
@@ -24,8 +29,6 @@ paths:
       summary: API Index
       description: |
         This resource serves as a starting point for exploring the API.
-        
-        The impatient can go directly finding out [the current time](/operations/get-now).
       responses:
         '200':
           description: ''
@@ -109,6 +112,7 @@ paths:
       - schema:
           type: integer
           example: 2023
+          minimum: 1792
         name: year
         in: path
         required: true
@@ -116,6 +120,8 @@ paths:
       - schema:
           type: integer
           example: 2
+          minimum: 1
+          maximum: 12
         name: month
         in: path
         required: true
@@ -123,6 +129,8 @@ paths:
       - schema:
           type: integer
           example: 12
+          minimum: 1
+          maximum: 31
         name: day
         in: path
         required: true
@@ -174,6 +182,8 @@ paths:
       - schema:
           type: integer
           example: 20
+          minimum: 0
+          maximum: 23
         name: hour
         in: path
         required: true
@@ -181,6 +191,8 @@ paths:
       - schema:
           type: integer
           example: 49
+          minimum: 0
+          maximum: 59
         name: minute
         in: path
         required: true
@@ -188,6 +200,8 @@ paths:
       - schema:
           type: integer
           example: 12
+          minimum: 0
+          maximum: 59
         name: second
         in: path
         required: true

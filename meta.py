@@ -49,9 +49,9 @@ def relation_template():
 @bp.get('/relation/<string:rel>')
 def relation(rel: str):
     rels = {
-        'now': 'The <em>now</em> link will resolve to a resource representing the current date and time.',
-        'date': 'This link will resolve to a related <em>date</em> resource.',
-        'time': 'This link will resolve to a related <em>time</em> resource.',
+        'now': 'The <em>now</em> link will resolve to a <em><a href="/meta/schema/moment">moment</a></em> resource representing the current date and time.',
+        'date': 'This link will resolve to a <em><a href="/meta/schema/date">date</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
+        'time': 'This link will resolve to a <em><a href="/meta/schema/time">time</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
         'meta-day': 'External links to resources related to the plant, animal, object or concept that this day is commemorating.',
         'meta-month': 'External links to resources related to the natural phenomenon this month was named for.'
     }
