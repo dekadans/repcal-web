@@ -1,18 +1,37 @@
+import {parseTemplate} from "url-template";
+
+const rel = {
+    NOW: 'repcal:now',
+    DATE: 'repcal:date',
+    TIME: 'repcal:time'
+};
+
+const api = (async () => {
+    return fetch('/api')
+        .then(response => response.json())
+        .then(data => data._links);
+})();
+
+async function call(rel, params) {
+    const relations = await api;
+    const uri = parseTemplate(relations[rel].href).expand(params);
+    const response = await fetch(uri);
+    return await response.json();
+}
+
 async function getNow() {
     const offset = (new Date()).getTimezoneOffset() * -1;
-    const response = await fetch('/now?offset=' + offset);
-    const data = await response.json();
+    const data = await call(rel.NOW, {offset});
 
     return {
-        ...parseDate(data._embedded['repcal:date']),
-        ...parseTime(data._embedded['repcal:time'])
+        ...parseDate(data._embedded[rel.DATE]),
+        ...parseTime(data._embedded[rel.TIME])
     };
 }
 
 async function convertDate(dateString) {
-    const [year, month, date] = dateString.split('-');
-    const response = await fetch(`/date/${year}/${month}/${date}`);
-    const data = await response.json();
+    const [year, month, day] = dateString.split('-');
+    const data = await call(rel.DATE, {year, month, day});
     return parseDate(data);
 }
 
