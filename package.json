@@ -1,0 +1,22 @@
+{
+  "name": "repcal-web",
+  "version": "1.0.0",
+  "description": "The source of the [repcal.info](https://repcal.info) website and REST API.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.0",
+    "url-template": "^3.1.1"
+  }
+}

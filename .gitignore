@@ -4,3 +4,5 @@ venv
 run.sh
 temp.py
 .DS_Store
+node_modules
+static/dist.js

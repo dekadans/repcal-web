@@ -4,8 +4,8 @@
 {{ super() }}
 
 <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('dateDetails', dateDetailsApp);
+    document.addEventListener("DOMContentLoaded", () => {
+        repcal.initDetails();
     });
 </script>
 
