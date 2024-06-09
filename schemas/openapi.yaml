@@ -153,20 +153,26 @@ paths:
               example:
                 _links: {}
                 texts:
-                  default: 'Sextidi 6 germinal an CCXXXI'
+                  default: 'Octidi 8 germinal an CCXXXII'
                 attributes:
                   complementary: false
                   day:
-                    name: 'Sextidi'
-                    number_in_week: 6
-                    number_in_month: 6
-                    number_in_year: 186
+                    name: 'Octidi'
+                    number_in_week: 8
+                    number_in_month: 8
+                    number_in_year: 188
+                    entity:
+                      id: 'Q29465'
+                      name: 'Daffodils'
                   week:
                     number_in_month: 1
                     number_in_year: 19
                   month:
                     name: 'Germinal'
                     number: 7
+                    entity:
+                      id: 'Q193838'
+                      name: 'Germination'
                   year:
                     arabic: 231
                     roman: 'CCXXXI'

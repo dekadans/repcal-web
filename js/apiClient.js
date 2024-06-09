@@ -3,18 +3,17 @@ import {parseTemplate} from "url-template";
 const rel = {
     NOW: 'repcal:now',
     DATE: 'repcal:date',
-    TIME: 'repcal:time'
+    TIME: 'repcal:time',
+    WIKI: 'repcal:wiki'
 };
 
-const api = (async () => {
-    return fetch('/api')
-        .then(response => response.json())
-        .then(data => data._links);
-})();
+const api = fetch('/api')
+    .then(response => response.json())
+    .then(data => data['_links']);
 
-async function call(rel, params) {
+async function call(relation, params) {
     const relations = await api;
-    const uri = parseTemplate(relations[rel].href).expand(params);
+    const uri = parseTemplate(relations[relation].href).expand(params);
     const response = await fetch(uri);
     return await response.json();
 }
@@ -22,10 +21,11 @@ async function call(rel, params) {
 async function getNow() {
     const offset = (new Date()).getTimezoneOffset() * -1;
     const data = await call(rel.NOW, {offset});
+    const resources = data['_embedded'];
 
     return {
-        ...parseDate(data._embedded[rel.DATE]),
-        ...parseTime(data._embedded[rel.TIME])
+        ...parseDate(resources[rel.DATE]),
+        ...parseTime(resources[rel.TIME])
     };
 }
 
@@ -36,13 +36,11 @@ async function convertDate(dateString) {
 }
 
 function parseDate(api_date) {
-    const uiLink = api_date
-        ._links['repcal:meta-day']
-        .find(l => l.name === 'ui');
+    const uiLink = api_date['_links'][rel.WIKI].find(l => l.name === 'day');
 
     return {
         date: api_date.texts.default,
-        celebrating: uiLink.title,
+        celebrating: api_date.attributes.day.entity.name,
         wiki: uiLink.href
     }
 }

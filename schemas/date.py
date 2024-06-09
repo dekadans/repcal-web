@@ -40,7 +40,8 @@ def schema():
                             "name",
                             "number_in_week",
                             "number_in_month",
-                            "number_in_year"
+                            "number_in_year",
+                            "entity"
                         ],
                         "description": "Information about this date's day.",
                         "properties": {
@@ -61,6 +62,23 @@ def schema():
                                 "type": "integer",
                                 "minimum": 1,
                                 "maximum": 366
+                            },
+                            "entity": {
+                                "type": "object",
+                                "required": [
+                                    "id",
+                                    "name"
+                                ],
+                                "description": "Information about the plant, animal, object or concept that this day is commemorating.",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Wikidata entity ID."
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     },
@@ -89,7 +107,8 @@ def schema():
                         "description": "Information about this date's month.",
                         "required": [
                             "name",
-                            "number"
+                            "number",
+                            "entity"
                         ],
                         "properties": {
                             "name": {
@@ -99,6 +118,23 @@ def schema():
                                 "type": "number",
                                 "minimum": 1,
                                 "maximum": 13
+                            },
+                            "entity": {
+                                "type": "object",
+                                "required": [
+                                    "id",
+                                    "name"
+                                ],
+                                "description": "Information about the natural phenomenon this month was named for.",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Wikidata entity ID."
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     },

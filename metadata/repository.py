@@ -6,9 +6,8 @@ import pkgutil
 class Subject:
     def __init__(self, name: str, entity_id: str, wiki_page: str):
         self.name = name
-        self.uri = 'https://www.wikidata.org/entity/' + entity_id
+        self.id = entity_id
         self.wiki_html = 'https://en.wikipedia.org/wiki/' + wiki_page
-        self.wiki_json = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + wiki_page
 
 
 def get_observation_data():
