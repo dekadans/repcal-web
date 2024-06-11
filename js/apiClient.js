@@ -29,10 +29,22 @@ async function getNow() {
     };
 }
 
+/*
+ * Takes a date in the format "2024-01-01"
+ */
 async function convertDate(dateString) {
     const [year, month, day] = dateString.split('-');
     const data = await call(rel.DATE, {year, month, day});
     return parseDate(data);
+}
+
+/*
+ * Takes a timestamp in the format "00:00:00"
+ */
+async function convertTime(timeString) {
+    const [hour, minute, second] = timeString.split(':');
+    const data = await call(rel.TIME, {hour, minute, second});
+    return parseTime(data);
 }
 
 function parseDate(api_date) {
@@ -55,5 +67,6 @@ function parseTime(api_time) {
 
 export {
     getNow,
-    convertDate
+    convertDate,
+    convertTime
 }

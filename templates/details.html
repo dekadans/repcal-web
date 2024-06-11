@@ -15,14 +15,6 @@
 <section>
     <fieldset x-data="dateDetails">
         <legend>Republican Calendar</legend>
-        <table>
-            <tbody>
-                <tr>
-                    <td><input type="date" id="rep_date" x-model="input"></td>
-                    <td><input type="button" value="Convert" @click="convert"></td>
-                </tr>
-            </tbody>
-        </table>
         <details>
             <summary>About</summary>
             <p>The calendar was used from 1793 to 1805...</p>
@@ -35,23 +27,37 @@
                 Read more on <a href="https://en.wikipedia.org/wiki/French_Republican_calendar">Wikipedia</a>.
             </p>
         </details>
-    </fieldset>
-
-
-    <fieldset>
-        <legend>Decimal Time</legend>
         <table>
-            <tbody>
+            <thead>
             <tr>
-                <td><input type="time" step="1" id="rep_time"></td>
-                <td><input type="button" value="Convert"></td>
+                <td><input type="date" id="rep_date" x-model="input"></td>
+                <td><input type="button" value="Convert" @click="convert"></td>
+            </tr>
+            </thead>
+            <tbody x-cloak x-show="data">
+            <tr>
+                <td>Text</td>
+                <td x-text="data.date"></td>
             </tr>
             </tbody>
         </table>
+    </fieldset>
+
+
+    <fieldset x-data="timeDetails">
+        <legend>Decimal Time</legend>
         <details>
             <summary>About</summary>
             <p>decimal time was used for about a year (six months) between 1794 and 1795</p>
         </details>
+        <table>
+            <tbody>
+            <tr>
+                <td><input type="time" step="1" id="rep_time" x-model="input"></td>
+                <td><input type="button" value="Convert" @click="convert"></td>
+            </tr>
+            </tbody>
+        </table>
     </fieldset>
 </section>
 

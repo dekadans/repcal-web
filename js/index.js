@@ -1,6 +1,6 @@
 import Alpine from 'alpinejs'
 import now from './now'
-import dateDetails from './details'
+import * as details from './details'
 
 function initNow() {
     document.addEventListener('alpine:init', () => {
@@ -11,7 +11,8 @@ function initNow() {
 
 function initDetails() {
     document.addEventListener('alpine:init', () => {
-        Alpine.data('dateDetails', dateDetails);
+        Alpine.data('dateDetails', details.date);
+        Alpine.data('timeDetails', details.time);
     });
     Alpine.start();
 }

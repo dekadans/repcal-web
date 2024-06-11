@@ -1,7 +1,8 @@
 import * as apiClient from "./apiClient";
 
-export default () => ({
+const date = () => ({
     input: '',
+    data: false,
 
     init() {
         const now = new Date();
@@ -10,7 +11,28 @@ export default () => ({
         this.input = `${now.getFullYear()}-${month}-${date}`;
     },
 
-    convert() {
-        apiClient.convertDate(this.input);
+    async convert() {
+        this.data = await apiClient.convertDate(this.input);
     }
 });
+
+const time = () => ({
+    input: '',
+
+    init() {
+        const now = new Date();
+        const hour = now.getHours().toString().padStart(2, '0');
+        const minute = now.getMinutes().toString().padStart(2, '0');
+        const second = now.getSeconds().toString().padStart(2, '0');
+        this.input = `${hour}:${minute}:${second}`;
+    },
+
+    convert() {
+        apiClient.convertTime(this.input);
+    }
+})
+
+export {
+    date,
+    time
+}
