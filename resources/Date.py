@@ -21,6 +21,10 @@ class Date(Resource):
             'day': self.date.day
         }
 
+    def _get_short(self):
+        f = '{%d} compl. / {%y}' if self.republican.is_sansculottides() else '{%d} / {%m} / {%y}'
+        return self.republican.get_formatter().format(f)
+
     def _strip_tags(self, text: str) -> str:
         return re.compile(r'(<!--.*?-->|<[^>]*>)').sub('', text)
 
@@ -42,7 +46,7 @@ class Date(Resource):
         return {
             "texts": {
                 "default": str(self.republican),
-                "short": self.republican.get_formatter().format('{%d} / {%m} / {%y}'),
+                "short": self._get_short(),
                 "observance": self._get_observance()
             },
             "attributes": {
