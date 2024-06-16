@@ -2,6 +2,7 @@ from . import Resource
 from datetime import date
 from repcal import RepublicanDate
 from ..metadata import find_observation, find_month
+import re
 
 
 class Date(Resource):
@@ -20,10 +21,29 @@ class Date(Resource):
             'day': self.date.day
         }
 
+    def _strip_tags(self, text: str) -> str:
+        return re.compile(r'(<!--.*?-->|<[^>]*>)').sub('', text)
+
+    def _get_observance(self) -> dict:
+        if self.republican.is_sansculottides():
+            day = self.day_entity.name.lower()
+            text = f"<observance><day>Complementary day</day> celebrating <month>{day}</month>.</observance>"
+        else:
+            month = self.month_entity.name.lower()
+            day = self.day_entity.name.lower()
+            text = f"<observance>The day of <day>{day}</day>, in the month of <month>{month}</month>.</observance>"
+
+        return {
+            "default": self._strip_tags(text),
+            "tagged": text
+        }
+
     def to_dict(self) -> dict:
         return {
             "texts": {
-                "default": str(self.republican)
+                "default": str(self.republican),
+                "short": self.republican.get_formatter().format('{%d} / {%m} / {%y}'),
+                "observance": self._get_observance()
             },
             "attributes": {
                 "complementary": self.republican.is_sansculottides(),

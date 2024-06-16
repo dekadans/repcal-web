@@ -4,7 +4,8 @@ const rel = {
     NOW: 'repcal:now',
     DATE: 'repcal:date',
     TIME: 'repcal:time',
-    WIKI: 'repcal:wiki'
+    WIKI: 'repcal:wiki',
+    TRANSFORM: 'repcal:transform'
 };
 
 const api = fetch('/api')
@@ -13,9 +14,15 @@ const api = fetch('/api')
 
 async function call(relation, params) {
     const relations = await api;
-    const uri = parseTemplate(relations[relation].href).expand(params);
+    const link = relations[relation];
+    const uri = link.templated ? parseTemplate(link.href).expand(params) : link.href;
     const response = await fetch(uri);
-    return await response.json();
+
+    if (link.type.includes('json')) {
+        return response.json();
+    } else {
+        return response.text();
+    }
 }
 
 async function getNow() {
@@ -48,12 +55,17 @@ async function convertTime(timeString) {
 }
 
 function parseDate(api_date) {
-    const uiLink = api_date['_links'][rel.WIKI].find(l => l.name === 'day');
+    const wikiLinks = api_date['_links'][rel.WIKI];
+
+    const dayLink = wikiLinks.find(l => l.name === 'day').href;
+    const monthLink = wikiLinks.find(l => l.name === 'month').href;
 
     return {
         date: api_date.texts.default,
-        celebrating: api_date.attributes.day.entity.name,
-        wiki: uiLink.href
+        dateShort: api_date.texts.short,
+        observance: api_date.texts.observance.tagged,
+        dayLink,
+        monthLink
     }
 }
 
@@ -65,8 +77,13 @@ function parseTime(api_time) {
     };
 }
 
+async function getObservanceTransform() {
+    return call(rel.TRANSFORM, null);
+}
+
 export {
     getNow,
     convertDate,
-    convertTime
+    convertTime,
+    getObservanceTransform
 }

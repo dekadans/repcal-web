@@ -44,4 +44,11 @@ class ApiIndexResponse(HALResponse):
             title='Resolve a time of day to its decimal counterpart.',
             templated=True
         ))
+        self.add_link(Link(
+            rel='repcal:transform',
+            endpoint='meta.transform_observance',
+            title='Default HTML transformation for the tagged observance text.',
+            name='observance',
+            media_type='application/xml'
+        ))
 

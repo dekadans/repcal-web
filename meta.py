@@ -52,7 +52,8 @@ def relation(rel: str):
         'now': 'The <em>now</em> link will resolve to a <em><a href="/meta/schema/moment">moment</a></em> resource representing the current date and time.',
         'date': 'This link will resolve to a <em><a href="/meta/schema/date">date</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
         'time': 'This link will resolve to a <em><a href="/meta/schema/time">time</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
-        'wiki': 'External links Wikipedia.'
+        'wiki': 'External links to Wikipedia.',
+        'transform': 'Links to resources for XSL transformations.'
     }
 
     if rel in rels:
@@ -60,3 +61,7 @@ def relation(rel: str):
     else:
         raise NotFound()
 
+
+@bp.get('/transform/observance')
+def transform_observance():
+    return send_file('metadata/observance.xslt', 'application/xml')

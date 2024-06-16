@@ -14,13 +14,13 @@
 
 
 <div id="app" x-data="now">
-    <h1 x-text="date"></h1>
+    <h1 :title="dateShort" x-text="date"></h1>
     <h2>
         <span x-text="hour"></span>:<span x-text="minute"></span>:<span x-text="second"></span>
     </h2>
 
     <section id="celebration">
-        <h3>Celebrating <a :href="wiki"><span x-text="celebrating"></span></a>.</h3>
+        <h3 x-html="observance"></h3>
         <hr>
         <div id="info">
             <p>
