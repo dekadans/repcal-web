@@ -64,6 +64,19 @@ function parseDate(api_date) {
         date: api_date.texts.default,
         dateShort: api_date.texts.short,
         observance: api_date.texts.observance.tagged,
+
+        yearRoman: api_date.attributes.year.roman,
+        yearArabic: api_date.attributes.year.arabic,
+
+        monthName: api_date.attributes.month.name,
+        monthNumber: api_date.attributes.month.number,
+
+        dayNumberMonth: api_date.attributes.day.number_in_month,
+        dayName: api_date.attributes.day.name,
+
+        observingMonth: api_date.attributes.month.entity.name,
+        observingDay: api_date.attributes.day.entity.name,
+
         dayLink,
         monthLink
     }
@@ -71,6 +84,8 @@ function parseDate(api_date) {
 
 function parseTime(api_time) {
     return {
+        timeString: api_time.texts.default,
+        timeDecimal: api_time.texts.decimal,
         hour: api_time.attributes.hour,
         minute: api_time.attributes.minute,
         second: api_time.attributes.second

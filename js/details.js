@@ -18,6 +18,7 @@ const date = () => ({
 
 const time = () => ({
     input: '',
+    data: false,
 
     init() {
         const now = new Date();
@@ -27,8 +28,8 @@ const time = () => ({
         this.input = `${hour}:${minute}:${second}`;
     },
 
-    convert() {
-        apiClient.convertTime(this.input);
+    async convert() {
+        this.data = await apiClient.convertTime(this.input);
     }
 })
 
