@@ -1,19 +1,20 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>repcal.info API Documentation</title>
+{% extends "layout.html" %}
 
-  <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
-</head>
-<body style="height: 100vh;">
+{% block head %}
+{{ super() }}
 
-<elements-api
-  apiDescriptionUrl="/meta/openapi"
-  router="hash"
-/>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      repcal.initDocs();
+  });
+</script>
 
-</body>
-</html>
+{% endblock %}
+{% block content %}
+
+<section id="docs" x-data="docs">
+    <p><em>Documentation rendered from Markdown source.</em></p>
+    <div x-html="text"></div>
+</section>
+
+{% endblock %}

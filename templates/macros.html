@@ -1,6 +1,16 @@
 {% macro nav_link(menu_item) %}
-    {% set path = "/details" if menu_item == "details" else "/" %}
-    {% set text = "Details" if menu_item == "details" else "Now" %}
+
+    {% if menu_item == "details" %}
+        {% set path = "/details" %}
+        {% set text = "Details" %}
+    {% elif menu_item == "api" %}
+        {% set path = "/docs" %}
+        {% set text = "API" %}
+    {% else %}
+        {% set path = "/" %}
+        {% set text = "Now" %}
+    {% endif %}
+
     {% set class = "active" if path == request.path else "" %}
     <li><a href="{{ path }}" class="{{ class }}">{{ text }}</a></li>
 {% endmacro %}

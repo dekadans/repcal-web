@@ -10,6 +10,11 @@ def openapi():
     return send_file('schemas/openapi.yaml', 'application/openapi+yaml;version=3.1')
 
 
+@bp.get('/service/doc')
+def service_doc():
+    return send_file('schemas/api.md', 'text/markdown')
+
+
 @bp.get('/schema/api')
 def schema_apiindex():
     return schema_response(api.schema())

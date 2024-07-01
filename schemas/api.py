@@ -5,21 +5,11 @@ def schema():
     return {
         "title": "ApiIndex",
         "type": "object",
-        "description": "Hypermedia index of the API, offering links to useful resources.",
+        "description": "Hypermedia index of the API, offering links to resources and operations.",
         "properties": {
-            "_links": link.schema(),
-            "name": {
-                "type": "string",
-                "description": "API name."
-            },
-            "description": {
-                "type": "string",
-                "description": "Short API description."
-            }
+            "_links": link.schema()
         },
         "required": [
-            "_links",
-            "name",
-            "description"
+            "_links"
         ]
     }

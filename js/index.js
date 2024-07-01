@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs'
 import now from './now'
 import * as details from './details'
+import docs from './docs'
 
 function initNow() {
     document.addEventListener('alpine:init', () => {
@@ -17,7 +18,15 @@ function initDetails() {
     Alpine.start();
 }
 
+function initDocs() {
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('docs', docs);
+    });
+    Alpine.start();
+}
+
 window.repcal = {
     initNow,
-    initDetails
+    initDetails,
+    initDocs
 }

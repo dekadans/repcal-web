@@ -1,29 +1,13 @@
 body {
-    text-align: center;
     font-family: 'Poppins', sans-serif;
     color: #000000;
+    font-size: 14px;
 }
 
 a, p {
     color: #000000;
 }
 
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0;
-    margin-top: 100px;
-    font-weight: 500;
-}
-h2 {
-    font-size: 1.5rem;
-    margin-top: 0;
-    font-weight: 400;
-}
-h3 {
-    margin: 30px 0;
-    font-weight: 400;
-    font-size: 1.2rem;
-}
 
 section {
     width: 50%;
@@ -36,7 +20,11 @@ section {
     }
 }
 
+[x-cloak] { display: none !important; }
 
+#menu {
+    text-align: center;
+}
 
 #menu h1 {
     display: inline-block;
@@ -52,7 +40,6 @@ section {
 
 #menu li {
     display: inline-block;
-    font-size: 0.9rem;
     margin-left: 1rem;
 }
 
@@ -69,7 +56,30 @@ section {
     text-underline-offset: 0.2rem;
 }
 
+/*
+ * Start page
+ */
 
+#app {
+    text-align: center;
+}
+
+#app h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    margin-top: 100px;
+    font-weight: 500;
+}
+#app h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    font-weight: 400;
+}
+#app h3 {
+    font-size: 1.2rem;
+    margin: 30px 0;
+    font-weight: 400;
+}
 
 #celebration {
     width: 40%;
@@ -86,36 +96,17 @@ section {
     font-weight: 300;
 }
 
+/*
+ * Details page
+ */
+
 .details {
-    text-align: left;
     margin-top: 2rem;
     margin-bottom: 3rem;
 }
-.details p {
-    font-size: 0.9rem;
-}
-
 
 fieldset {
     margin-bottom: 3rem;
-    text-align: left;
-}
-
-details {
-    margin: 0 0 15px 0;
-    padding: 5px 10px;
-    background-color: #f4f4f4;
-    font-size: 0.9rem;
-    text-align: left;
-}
-
-summary {
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-label {
-    display: block;
 }
 
 input {
@@ -126,10 +117,6 @@ input {
 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-tbody {
-    font-size: 0.9rem;
 }
 
 tbody td {
@@ -144,4 +131,27 @@ tr td:last-child, tr th:last-child {
     text-align: right;
 }
 
-[x-cloak] { display: none !important; }
+/*
+ * Docs page
+ */
+
+#docs {
+    margin-bottom: 8rem;
+}
+
+#docs h1 {
+    font-size: 1.8rem;
+}
+
+#docs h3 {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/*
+ * Relations page
+ */
+
+#relation {
+    text-align: center;
+}

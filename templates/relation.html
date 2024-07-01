@@ -1,8 +1,13 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Link relation: <em>{{name}}</em></h1>
-<div id="intro">
-    {{text|safe}}
-</div>
+<section id="relation">
+    <p>
+        <em><small>This URI identifies, and provides a short description of, a link relation within the API.</small></em>
+    </p>
+    <h1>Link relation: <em>{{name}}</em></h1>
+    <p>
+        {{text|safe}}
+    </p>
+</section>
 {% endblock %}

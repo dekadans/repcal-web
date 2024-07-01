@@ -6,25 +6,11 @@ from .HALResponse import HALResponse
 class ApiIndexResponse(HALResponse):
     def __init__(self, i: ApiIndex) -> None:
         super().__init__(i)
-        self.add_curie(Curie('repcal'))
-        self.add_link(Link(
-            rel='help',
-            endpoint='https://datatracker.ietf.org/doc/html/draft-kelly-json-hal',
-            media_type='text/html',
-            title='Information about the HAL (Hypertext Application Language) JSON media type',
-            external=True
-        ))
-        self.add_link(Link(
-            rel='service-desc',
-            endpoint='meta.openapi',
-            media_type='application/openapi+yaml;version=3.1',
-            title='OpenAPI description document'
-        ))
         self.add_link(Link(
             rel='service-doc',
-            endpoint='docs',
-            media_type='text/html',
-            title='Rendered API documentation'
+            endpoint='meta.service_doc',
+            media_type='text/markdown',
+            title='API documentation markdown source.'
         ))
         self.add_link(Link(
             rel='repcal:now',
@@ -51,4 +37,5 @@ class ApiIndexResponse(HALResponse):
             name='observance',
             media_type='application/xml'
         ))
+        self.add_curie(Curie('repcal'))
 
