@@ -1,8 +1,11 @@
 {% macro nav_link(menu_item) %}
 
-    {% if menu_item == "details" %}
-        {% set path = "/details" %}
-        {% set text = "Details" %}
+    {% if menu_item == "convert" %}
+        {% set path = "/convert" %}
+        {% set text = "Convert" %}
+    {% elif menu_item == "about" %}
+        {% set path = "/about" %}
+        {% set text = "About" %}
     {% elif menu_item == "api" %}
         {% set path = "/docs" %}
         {% set text = "API" %}

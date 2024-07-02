@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, url_for, render_template, send_file
 from werkzeug.exceptions import NotFound
 from .schemas import api, moment, time, date
+from .responses import relations
 
 bp = Blueprint('meta', __name__, url_prefix='/meta')
 
@@ -54,15 +55,15 @@ def relation_template():
 @bp.get('/relation/<string:rel>')
 def relation(rel: str):
     rels = {
-        'now': 'The <em>now</em> link will resolve to a <em><a href="/meta/schema/moment">moment</a></em> resource representing the current date and time.',
-        'date': 'This link will resolve to a <em><a href="/meta/schema/date">date</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
-        'time': 'This link will resolve to a <em><a href="/meta/schema/time">time</a></em> resource.<br>May be to a specific resource or templated for generic usage.',
-        'wiki': 'External links to Wikipedia.',
-        'transform': 'Links to resources for XSL transformations.'
+        'now': relations.Now,
+        'date': relations.Date,
+        'time': relations.Time,
+        'wiki': relations.Wikipedia,
+        'transform': relations.Transform
     }
 
     if rel in rels:
-        return render_template('relation.html', name=rel, text=rels[rel])
+        return render_template('relation.html', name=rel, info=rels[rel]())
     else:
         raise NotFound()
 

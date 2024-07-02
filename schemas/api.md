@@ -52,10 +52,10 @@ Listed below are link relation types, as defined by [RFC 8288](https://www.rfc-e
 that are used by this API:
 
 
-* [`/meta/relation/now`](/meta/relation/now)
-* [`/meta/relation/date`](/meta/relation/date)
-* [`/meta/relation/time`](/meta/relation/time)
-* [`/meta/relation/transform`](/meta/relation/transform)
-* [`/meta/relation/wiki`](/meta/relation/wiki)
+* [`repcal:now`](/meta/relation/now)
+* [`repcal:date`](/meta/relation/date)
+* [`repcal:time`](/meta/relation/time)
+* [`repcal:transform`](/meta/relation/transform)
+* [`repcal:wiki`](/meta/relation/wiki)
 
 Additionally, IANA-registered types like `self`, `describedby` and `service-doc` are also used.

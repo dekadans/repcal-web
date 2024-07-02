@@ -2,12 +2,37 @@
 
 {% block content %}
 <section id="relation">
-    <p>
-        <em><small>This URI identifies, and provides a short description of, a link relation within the API.</small></em>
+    <h1>Link Relation</h1>
+    <p class="relation-id">
+        <code class="hl">repcal:{{ name }}</code>
     </p>
-    <h1>Link relation: <em>{{name}}</em></h1>
     <p>
-        {{text|safe}}
+        Expanded URI: <code class="hl">{{ request.url }}</code>
     </p>
+
+    <h2>Target Details</h2>
+    <ul>
+        <li>Media type: <code>{{ info.media_type }}</code></li>
+        {% if info.has_schema %}
+        <li>Resource type: <code><a href="/meta/schema/{{ info.resource }}">{{ info.resource.capitalize() }}</a></code></li>
+        {% else %}
+        <li>Resource type: {{ info.resource }}</li>
+        {% endif %}
+    </ul>
+
+    <h2>Description</h2>
+    <p>
+        {{info.text.replace('\n', '<br>')|safe}}
+    </p>
+
+    <hr>
+    <div class="footnote">
+        <p>
+            This URI identifies, and provides a short description of, a link relation within the API.
+        </p>
+        <p>
+            Read more about this concept in <a href="https://www.rfc-editor.org/rfc/rfc8288.html">RFC 8288: Web Linking</a>.
+        </p>
+    </div>
 </section>
 {% endblock %}

@@ -19,7 +19,12 @@ def start():
     return render_template('index.html')
 
 
-@app.route('/details')
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/convert')
 def convert():
     return render_template('details.html')
 
