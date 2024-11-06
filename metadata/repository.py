@@ -32,6 +32,29 @@ def find_observation(republican_date: RepublicanDate) -> Subject:
     )
 
 
+def get_day_by_index(index: int) -> Subject:
+    m = index // 30
+    d = index % 30
+    data = get_observation_data()
+    observance = data[m][d]
+    return Subject(
+        observance.get('label'),
+        observance.get('id'),
+        observance.get('wiki')
+    )
+
+
+def get_month_by_index(index: int) -> Subject:
+    m = index // 30
+    data = get_month_data()
+    observance = data[m]
+    return Subject(
+        observance.get('label'),
+        observance.get('id'),
+        observance.get('wiki')
+    )
+
+
 def find_month(republican_date: RepublicanDate) -> Subject:
     data = get_month_data()
 

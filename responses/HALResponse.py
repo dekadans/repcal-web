@@ -1,13 +1,14 @@
 from ..resources import Resource
 from .links import Link, Curie
-from typing import Dict
+from typing import Dict, List
 from flask import jsonify
 from .factory import make_response
 
 
 class HALResponse:
-    def __init__(self, primary: Resource) -> None:
+    def __init__(self, primary: Resource, requested_embeds) -> None:
         self.primary: Resource = primary
+        self.requested_embeds: List = requested_embeds
         self.embedded: Dict[str, Resource] = {}
         self.links = {}
         self.add_link(self._get_resource_link('self', self.primary))
@@ -56,7 +57,7 @@ class HALResponse:
 
         if len(self.embedded) > 0:
             resp['_embedded'] = {
-                key: make_response(value).as_embedded().to_dict()
+                key: make_response(value, self.requested_embeds).as_embedded().to_dict()
                 for (key, value) in self.embedded.items()
             }
 

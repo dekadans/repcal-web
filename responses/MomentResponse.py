@@ -4,8 +4,8 @@ from ..resources import Moment, Date, Time
 
 
 class MomentResponse(HALResponse):
-    def __init__(self, moment: Moment) -> None:
-        super().__init__(moment)
+    def __init__(self, moment: Moment, e) -> None:
+        super().__init__(moment, e)
 
         self.add_curie(Curie('repcal'))
         self.add_embedded('repcal:date', Date(moment.datetime.date()))

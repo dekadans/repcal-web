@@ -62,7 +62,7 @@ def moment_resource(timestamp: int, offset: str):
     tz = timezone(offset.to_timedelta())
     dt = datetime.fromtimestamp(timestamp, tz)
     r = resources.Moment(dt)
-    return responses.make_response(r).to_response()
+    return responses.make_response(r, ['repcal:observance']).to_response()
 
 
 @app.get('/date/<int:year>/<int:month>/<int:day>')
@@ -94,6 +94,15 @@ def time_resource(hour, minute, second):
 @app.get('/time{/hour:2,minute:2,second:2}')
 def time_template():
     raise NotFound()
+
+
+@app.get('/observance/<int:index>')
+def observance_resource(index):
+    try:
+        obs = resources.Observance(index)
+        return responses.make_response(obs).to_response()
+    except IndexError:
+        raise NotFound('This URI does not correspond to a valid Observance resource.')
 
 
 @app.errorhandler(HTTPException)

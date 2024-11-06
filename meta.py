@@ -36,6 +36,11 @@ def schema_date():
     return schema_response(date.schema())
 
 
+@bp.get('/schema/observance')
+def schema_observance():
+    return schema_response({'title': 'Observance'})
+
+
 def schema_response(data):
     name = data['title'].lower()
     r = jsonify({
