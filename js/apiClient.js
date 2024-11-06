@@ -7,6 +7,7 @@ const rel = {
     NOW: 'repcal:now',
     DATE: 'repcal:date',
     TIME: 'repcal:time',
+    OBSERVANCE: 'repcal:observance',
     WIKI: 'repcal:wiki',
     TRANSFORM: 'repcal:transform',
     DOCS: 'service-doc'
@@ -29,6 +30,13 @@ async function call(relation, params) {
         throw new Error(`Unknown resource or operation: ${relation}`)
     }
 
+    return resolveLink(link, params);
+}
+
+/*
+ Resolves a resource from a HAL link object.
+ */
+async function resolveLink(link, params) {
     const uri = link.templated ?
         parseTemplate(link.href).expand(params) : link.href;
     const response = await fetch(uri);
@@ -42,12 +50,15 @@ async function call(relation, params) {
  */
 async function getNow() {
     const offset = (new Date()).getTimezoneOffset() * -1;
-    const data = await call(rel.NOW, {offset});
-    const resources = data['_embedded'];
+    const apiResponse = await call(rel.NOW, {offset});
+
+    const date = apiResponse['_embedded'][rel.DATE];
+    const time = apiResponse['_embedded'][rel.TIME];
+    const observance = date['_embedded'][rel.OBSERVANCE];
 
     return {
-        ...parseDate(resources[rel.DATE]),
-        ...parseTime(resources[rel.TIME])
+        ...parseDate(date, observance),
+        ...parseTime(time)
     };
 }
 
@@ -56,8 +67,12 @@ async function getNow() {
  */
 async function convertDate(dateString) {
     const [year, month, day] = dateString.split('-');
-    const data = await call(rel.DATE, {year, month, day});
-    return parseDate(data);
+    const apiDate = await call(rel.DATE, {year, month, day});
+
+    const observanceLink = apiDate['_links'][rel.OBSERVANCE];
+    const apiObservance = await resolveLink(observanceLink, null);
+
+    return parseDate(apiDate, apiObservance);
 }
 
 /*
@@ -65,51 +80,48 @@ async function convertDate(dateString) {
  */
 async function convertTime(timeString) {
     const [hour, minute, second] = timeString.split(':');
-    const data = await call(rel.TIME, {hour, minute, second});
-    return parseTime(data);
+    const apiTime = await call(rel.TIME, {hour, minute, second});
+    return parseTime(apiTime);
 }
 
 /*
- Flattens and simplifies a Date JSON resource into a Javascript object.
+ Flattens and simplifies Date and Observance JSON resources into a Javascript object.
  */
-function parseDate(api_date) {
-    const wikiLinks = api_date['_links'][rel.WIKI];
-
-    const dayLink = wikiLinks.find(l => l.name === 'day').href;
-    const monthLink = wikiLinks.find(l => l.name === 'month').href;
+function parseDate(apiDate, apiObservance) {
+    const wikiLinks = apiObservance['_links'][rel.WIKI];
 
     return {
-        date: api_date.texts.default,
-        dateShort: api_date.texts.short,
-        observance: api_date.texts.observance.tagged,
+        date: apiDate.texts.default,
+        dateShort: apiDate.texts.short,
 
-        yearRoman: api_date.attributes.year.roman,
-        yearArabic: api_date.attributes.year.arabic,
+        yearRoman: apiDate.attributes.year.roman,
+        yearArabic: apiDate.attributes.year.arabic,
 
-        monthName: api_date.attributes.month.name,
-        monthNumber: api_date.attributes.month.number,
+        monthName: apiDate.attributes.month.name,
+        monthNumber: apiDate.attributes.month.number,
 
-        dayNumberMonth: api_date.attributes.day.number_in_month,
-        dayName: api_date.attributes.day.name,
+        dayNumberMonth: apiDate.attributes.day.number_in_month,
+        dayName: apiDate.attributes.day.name,
 
-        observingMonth: api_date.attributes.month.entity.name,
-        observingDay: api_date.attributes.day.entity.name,
+        observance: apiObservance.texts.tagged,
+        observingMonth: apiObservance.attributes.month.name,
+        observingDay: apiObservance.attributes.day.name,
 
-        dayLink,
-        monthLink
+        dayLink: wikiLinks.find(l => l.name === 'day').href,
+        monthLink: wikiLinks.find(l => l.name === 'month').href
     }
 }
 
 /*
  Flattens and simplifies a Time JSON resource into a Javascript object.
  */
-function parseTime(api_time) {
+function parseTime(apiTime) {
     return {
-        timeString: api_time.texts.default,
-        timeDecimal: api_time.texts.decimal,
-        hour: api_time.attributes.hour,
-        minute: api_time.attributes.minute,
-        second: api_time.attributes.second
+        timeString: apiTime.texts.default,
+        timeDecimal: apiTime.texts.decimal,
+        hour: apiTime.attributes.hour,
+        minute: apiTime.attributes.minute,
+        second: apiTime.attributes.second
     };
 }
 

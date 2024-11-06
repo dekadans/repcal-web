@@ -1,4 +1,3 @@
-from repcal import RepublicanDate
 import json
 import pkgutil
 
@@ -18,18 +17,6 @@ def get_observation_data():
 def get_month_data():
     file_data = pkgutil.get_data(__name__, 'data/months.json')
     return json.loads(file_data)
-
-
-def find_observation(republican_date: RepublicanDate) -> Subject:
-    data = get_observation_data()
-
-    celebration = data[republican_date.month_index][republican_date.month_day_index]
-
-    return Subject(
-        celebration.get('label'),
-        celebration.get('id'),
-        celebration.get('wiki')
-    )
 
 
 def get_day_by_index(index: int) -> Subject:
@@ -52,18 +39,6 @@ def get_month_by_index(index: int) -> Subject:
         observance.get('label'),
         observance.get('id'),
         observance.get('wiki')
-    )
-
-
-def find_month(republican_date: RepublicanDate) -> Subject:
-    data = get_month_data()
-
-    celebration = data[republican_date.month_index]
-
-    return Subject(
-        celebration.get('label'),
-        celebration.get('id'),
-        celebration.get('wiki')
     )
 
 

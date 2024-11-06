@@ -62,6 +62,7 @@ def relation(rel: str):
     rels = {
         'now': relations.Now,
         'date': relations.Date,
+        'observance': relations.Observance,
         'time': relations.Time,
         'wiki': relations.Wikipedia,
         'transform': relations.Transform

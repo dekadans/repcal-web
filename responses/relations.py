@@ -33,6 +33,14 @@ class Date(HALRelation):
         )
 
 
+class Observance(HALRelation):
+    def __init__(self):
+        super().__init__(
+            'observance',
+            'This link will resolve to an observance resource, linked from a date resource.'
+        )
+
+
 class Time(HALRelation):
     def __init__(self):
         super().__init__(

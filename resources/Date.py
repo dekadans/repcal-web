@@ -1,16 +1,12 @@
 from . import Resource
 from datetime import date
 from repcal import RepublicanDate
-from ..metadata import find_observation, find_month
-import re
 
 
 class Date(Resource):
     def __init__(self, d: date) -> None:
         self.date = d
         self.republican = RepublicanDate.from_gregorian(d)
-        self.day_entity = find_observation(self.republican)
-        self.month_entity = find_month(self.republican)
 
     def type(self) -> str: return 'date'
 
@@ -25,29 +21,11 @@ class Date(Resource):
         f = '{%d} compl. / {%y}' if self.republican.is_sansculottides() else '{%d} / {%m} / {%y}'
         return self.republican.get_formatter().format(f)
 
-    def _strip_tags(self, text: str) -> str:
-        return re.compile(r'(<!--.*?-->|<[^>]*>)').sub('', text)
-
-    def _get_observance(self) -> dict:
-        if self.republican.is_sansculottides():
-            day = self.day_entity.name.lower()
-            text = f"<observance><day>Complementary day</day> celebrating <month>{day}</month>.</observance>"
-        else:
-            month = self.month_entity.name.lower()
-            day = self.day_entity.name.lower()
-            text = f"<observance>The day of <day>{day}</day>, in the month of <month>{month}</month>.</observance>"
-
-        return {
-            "default": self._strip_tags(text),
-            "tagged": text
-        }
-
     def to_dict(self) -> dict:
         return {
             "texts": {
                 "default": str(self.republican),
-                "short": self._get_short(),
-                "observance": self._get_observance()
+                "short": self._get_short()
             },
             "attributes": {
                 "complementary": self.republican.is_sansculottides(),
@@ -55,11 +33,7 @@ class Date(Resource):
                     "name": self.republican.get_day_name(),
                     "number_in_week": self.republican.get_day_in_week(),
                     "number_in_month": self.republican.get_day(),
-                    "number_in_year": self.republican.get_day_in_year(),
-                    "entity": {
-                        "id": self.day_entity.id,
-                        "name": self.day_entity.name
-                    }
+                    "number_in_year": self.republican.get_day_in_year()
                 },
                 "week": {
                     "number_in_month": self.republican.get_week(),
@@ -67,11 +41,7 @@ class Date(Resource):
                 },
                 "month": {
                     "name": self.republican.get_month_name() if not self.republican.is_sansculottides() else 'Jours complémentaires',
-                    "number": self.republican.get_month(),
-                    "entity": {
-                        "id": self.month_entity.id,
-                        "name": self.month_entity.name
-                    }
+                    "number": self.republican.get_month()
                 },
                 "year": {
                     "arabic": self.republican.get_year_arabic(),
