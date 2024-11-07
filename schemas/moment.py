@@ -7,7 +7,7 @@ def schema():
         "type": "object",
         "description": "A specific point in time.",
         "properties": {
-            "_links": link.schema(),
+            "_links": link.schema(["curies", "repcal:date", "repcal:time"]),
             "iso": {
                 "type": "string",
                 "format": "date-time",

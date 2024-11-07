@@ -7,7 +7,7 @@ def schema():
         "type": "object",
         "description": "Time information in the French Republican style.",
         "properties": {
-            "_links": link.schema(),
+            "_links": link.schema([]),
             "texts": {
                 "type": "object",
                 "required": [

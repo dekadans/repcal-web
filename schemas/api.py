@@ -7,7 +7,14 @@ def schema():
         "type": "object",
         "description": "Hypermedia index of the API, offering links to resources and operations.",
         "properties": {
-            "_links": link.schema()
+            "_links": link.schema([
+                "service-doc",
+                "repcal:now",
+                "repcal:date",
+                "repcal:time",
+                "repcal:transform",
+                "curies"
+            ])
         },
         "required": [
             "_links"

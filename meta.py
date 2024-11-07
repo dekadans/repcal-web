@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, url_for, render_template, send_file
 from werkzeug.exceptions import NotFound
-from .schemas import api, moment, time, date
+from .schemas import api, moment, time, date, observance, link
 from .responses import relations
 
 bp = Blueprint('meta', __name__, url_prefix='/meta')
@@ -38,7 +38,7 @@ def schema_date():
 
 @bp.get('/schema/observance')
 def schema_observance():
-    return schema_response({'title': 'Observance'})
+    return schema_response(observance.schema())
 
 
 def schema_response(data):
@@ -46,7 +46,8 @@ def schema_response(data):
     r = jsonify({
         '$schema': 'https://json-schema.org/draft/2019-09/schema',
         '$id': url_for(f'meta.schema_{name}', _external=True),
-        **data
+        **data,
+        **link.link_def()
     })
     r.content_type = 'application/schema+json'
     return r

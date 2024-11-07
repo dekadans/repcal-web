@@ -7,16 +7,21 @@ def schema():
         "type": "object",
         "description": "Date information in the French Republican style.",
         "properties": {
-            "_links": link.schema(),
+            "_links": link.schema(["curies", "repcal:observance"]),
             "texts": {
                 "type": "object",
                 "required": [
-                    "default"
+                    "default",
+                    "short"
                 ],
                 "properties": {
                     "default": {
                         "type": "string",
                         "description": "The default text representation of this date."
+                    },
+                    "short": {
+                        "type": "string",
+                        "description": "A shorter text representation."
                     }
                 }
             },
@@ -40,8 +45,7 @@ def schema():
                             "name",
                             "number_in_week",
                             "number_in_month",
-                            "number_in_year",
-                            "entity"
+                            "number_in_year"
                         ],
                         "description": "Information about this date's day.",
                         "properties": {
@@ -62,23 +66,6 @@ def schema():
                                 "type": "integer",
                                 "minimum": 1,
                                 "maximum": 366
-                            },
-                            "entity": {
-                                "type": "object",
-                                "required": [
-                                    "id",
-                                    "name"
-                                ],
-                                "description": "Information about the plant, animal, object or concept that this day is commemorating.",
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "description": "Wikidata entity ID."
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    }
-                                }
                             }
                         }
                     },
@@ -107,8 +94,7 @@ def schema():
                         "description": "Information about this date's month.",
                         "required": [
                             "name",
-                            "number",
-                            "entity"
+                            "number"
                         ],
                         "properties": {
                             "name": {
@@ -118,23 +104,6 @@ def schema():
                                 "type": "number",
                                 "minimum": 1,
                                 "maximum": 13
-                            },
-                            "entity": {
-                                "type": "object",
-                                "required": [
-                                    "id",
-                                    "name"
-                                ],
-                                "description": "Information about the natural phenomenon this month was named for.",
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "description": "Wikidata entity ID."
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    }
-                                }
                             }
                         }
                     },
