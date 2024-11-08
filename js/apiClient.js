@@ -14,11 +14,19 @@ const rel = {
 };
 
 /*
+ HAL-related reserved keys.
+ */
+const hal = {
+    LINKS: '_links',
+    EMBED: '_embedded'
+}
+
+/*
  Loading the Index resource.
  */
 const api = fetch('/api')
     .then(response => response.json())
-    .then(data => data['_links']);
+    .then(data => data[hal.LINKS]);
 
 /*
  Resolve an API resource through a link relation and any parameters.
@@ -41,6 +49,11 @@ async function resolveLink(link, params) {
         parseTemplate(link.href).expand(params) : link.href;
     const response = await fetch(uri);
 
+    if (!response.ok) {
+        alert('The request could not be fulfilled.');
+        throw new Error(`An API request got response code ${response.status}.`);
+    }
+
     return link.type && link.type.includes('json') ?
         response.json() : response.text();
 }
@@ -52,9 +65,9 @@ async function getNow() {
     const offset = (new Date()).getTimezoneOffset() * -1;
     const apiResponse = await call(rel.NOW, {offset});
 
-    const date = apiResponse['_embedded'][rel.DATE];
-    const time = apiResponse['_embedded'][rel.TIME];
-    const observance = date['_embedded'][rel.OBSERVANCE];
+    const date = apiResponse[hal.EMBED][rel.DATE];
+    const time = apiResponse[hal.EMBED][rel.TIME];
+    const observance = date[hal.EMBED][rel.OBSERVANCE];
 
     return {
         ...parseDate(date, observance),
@@ -66,29 +79,50 @@ async function getNow() {
  * Converts a date. Required format "yyyy-mm-dd"
  */
 async function convertDate(dateString) {
-    const [year, month, day] = dateString.split('-');
-    const apiDate = await call(rel.DATE, {year, month, day});
+    try {
+        const [year, month, day] = handleInput(dateString, '-');
 
-    const observanceLink = apiDate['_links'][rel.OBSERVANCE];
-    const apiObservance = await resolveLink(observanceLink, null);
+        const apiDate = await call(rel.DATE, {year, month, day});
+        const apiObservance = await resolveLink(
+            apiDate[hal.LINKS][rel.OBSERVANCE],
+            null
+        );
 
-    return parseDate(apiDate, apiObservance);
+        return parseDate(apiDate, apiObservance);
+    } catch (e) {
+        alert('Invalid input date.');
+        return false;
+    }
 }
 
 /*
  * Converts a timestamp. Required format "hh:mm:ss"
  */
 async function convertTime(timeString) {
-    const [hour, minute, second] = timeString.split(':');
-    const apiTime = await call(rel.TIME, {hour, minute, second});
-    return parseTime(apiTime);
+    try {
+        const [hour, minute, second] = handleInput(timeString, ':');
+        return parseTime(
+            await call(rel.TIME, {hour, minute, second})
+        );
+    } catch (e) {
+        alert('Invalid input time.');
+        return false;
+    }
+}
+
+function handleInput(value, separator) {
+    const parts = value.split(separator);
+    if (parts.length < 3) {
+        throw Error('Invalid input');
+    }
+    return parts;
 }
 
 /*
  Flattens and simplifies Date and Observance JSON resources into a Javascript object.
  */
 function parseDate(apiDate, apiObservance) {
-    const wikiLinks = apiObservance['_links'][rel.WIKI];
+    const wikiLinks = apiObservance[hal.LINKS][rel.WIKI];
 
     return {
         date: apiDate.texts.default,
