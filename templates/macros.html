@@ -14,6 +14,12 @@
         {% set text = "Now" %}
     {% endif %}
 
-    {% set class = "active" if path == request.path else "" %}
-    <li><a href="{{ path }}" class="{{ class }}">{{ text }}</a></li>
+    {% set current = true if path == request.path else false %}
+    <li>
+        <a
+            href="{{ path }}"
+            {% if current %} aria-current="page" {% else %} class="contrast" {% endif %}>
+            {{ text }}
+        </a>
+    </li>
 {% endmacro %}

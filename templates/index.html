@@ -14,17 +14,21 @@
 
 
 <div id="app" x-data="now">
-    <h1 :title="dateShort" x-text="date"></h1>
-    <h2>
-        <span x-text="hour"></span>:<span x-text="minute"></span>:<span x-text="second"></span>
-    </h2>
+    <section>
+        <hgroup>
+            <h1 :title="dateShort" x-text="date"></h1>
+            <p>
+                <span x-text="hour"></span>:<span x-text="minute"></span>:<span x-text="second"></span>
+            </p>
+        </hgroup>
+    </section>
 
     <section id="celebration">
-        <h3 x-html="observance"></h3>
+        <p x-html="observance"></p>
         <hr>
         <div class="footnote">
             <p>
-                This page shows the current date and time using the systems implemented by the French First Republic.
+                <small>This page shows the current date and time using the systems implemented by the French First Republic.</small>
             </p>
         </div>
     </section>

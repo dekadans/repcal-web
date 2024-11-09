@@ -10,22 +10,34 @@
   <meta property="og:image:height" content="630">
   <title>French Republican Calendar</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <link href="/static/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+
+    [x-cloak] { display: none !important; }
+  </style>
   <script src="/static/dist.js" defer></script>
   {% endblock %}
 </head>
 <body>
 {% import "macros.html" as macros %}
-<nav id="menu">
-  <h1>French Republican Calendar</h1>
-  <ul>
-    {{ macros.nav_link("now") }}
-    {{ macros.nav_link("about") }}
-    {{ macros.nav_link("convert") }}
-    {{ macros.nav_link("api") }}
-  </ul>
-</nav>
-{% block content %}{% endblock %}
+
+<header class="container">
+  <nav id="menu">
+    <ul>
+      <li><strong>Repcal.info</strong></li>
+    </ul>
+    <ul>
+      {{ macros.nav_link("now") }}
+      {{ macros.nav_link("about") }}
+      {{ macros.nav_link("convert") }}
+      {{ macros.nav_link("api") }}
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+
 </body>
 </html>

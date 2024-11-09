@@ -13,103 +13,107 @@
 {% block content %}
 
 <section class="details">
-
-    <h2>Convert</h2>
-    <fieldset x-data="dateDetails">
-        <legend>Republican Calendar</legend>
-        <table>
-            <thead>
-            <tr>
-                <td>
-                    <input type="date" id="rep_date" x-model="input">
-                </td>
-                <td>
-                    <a href="#" x-cloak x-show="data" @click.prevent="data = false">Clear</a>&nbsp;&nbsp;
-                    <input type="button" value="Convert" @click="convert">
-                </td>
-            </tr>
-            </thead>
-            <tbody x-cloak x-show="data">
-            <tr>
-                <td>Text format</td>
-                <td x-text="data.date"></td>
-            </tr>
-            <tr>
-                <td>Number format</td>
-                <td x-text="data.dateShort"></td>
-            </tr>
-            <tr>
-                <td>Year</td>
-                <td>
-                    <span x-text="data.yearRoman"></span> (<span x-text="data.yearArabic"></span>)
-                </td>
-            </tr>
-            <tr>
-                <td>Month</td>
-                <td>
-                    <span x-text="data.monthName"></span>
-                    (<a :href="data.monthLink" target="_blank"><span x-text="data.observingMonth"></span></a>)
-                </td>
-            </tr>
-            <tr>
-                <td>Day</td>
-                <td>
-                    <span x-text="data.dayNumberMonth"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Weekday</td>
-                <td>
-                    <span x-text="data.dayName"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Day's observance</td>
-                <td>
-                    <a :href="data.dayLink" target="_blank"><span x-text="data.observingDay"></span></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
-
-
-    <fieldset x-data="timeDetails">
-        <legend>Decimal Time</legend>
-        <table>
-            <thead>
-            <tr>
-                <td><input type="time" step="1" id="rep_time" x-model="input"></td>
-                <td>
-                    <a href="#" x-cloak x-show="data" @click.prevent="data = false">Clear</a>&nbsp;&nbsp;
-                    <input type="button" value="Convert" @click="convert">
-                </td>
-            </tr>
-            </thead>
-            <tbody x-cloak x-show="data">
-            <tr>
-                <td>Colon separated</td>
-                <td><span x-text="data.timeString"></span></td>
-            </tr>
-            <tr>
-                <td>Decimal</td>
-                <td><span x-text="data.timeDecimal"></span></td>
-            </tr>
-            <tr>
-                <td>Hour</td>
-                <td><span x-text="data.hour"></span></td>
-            </tr>
-            <tr>
-                <td>Minute</td>
-                <td><span x-text="data.minute"></span></td>
-            </tr>
-            <tr>
-                <td>Second</td>
-                <td><span x-text="data.second"></span></td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
+    <div class="grid">
+        <div>
+            <article x-data="dateDetails">
+                <header>
+                    Republican Calendar
+                    <a href="#" x-cloak x-show="data" @click.prevent="data = false" style="float: right" class="secondary">Clear</a>
+                </header>
+                <form>
+                    <fieldset role="group">
+                        <input type="date" id="rep_date" x-model="input">
+                        <input type="button" class="secondary" value="Convert" @click="convert">
+                    </fieldset>
+                </form>
+                <footer>
+                    <table>
+                        <tbody x-cloak x-show="data">
+                        <tr>
+                            <td>Text format</td>
+                            <td x-text="data.date"></td>
+                        </tr>
+                        <tr>
+                            <td>Number format</td>
+                            <td x-text="data.dateShort"></td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>
+                                <span x-text="data.yearRoman"></span> (<span x-text="data.yearArabic"></span>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Month</td>
+                            <td>
+                                <span x-text="data.monthName"></span>
+                                (<a :href="data.monthLink" target="_blank"><span x-text="data.observingMonth"></span></a>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Day</td>
+                            <td>
+                                <span x-text="data.dayNumberMonth"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Weekday</td>
+                            <td>
+                                <span x-text="data.dayName"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Day's observance</td>
+                            <td>
+                                <a :href="data.dayLink" target="_blank"><span x-text="data.observingDay"></span></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </footer>
+            </article>
+        </div>
+        <div>
+            <article x-data="timeDetails">
+                <header>
+                    Decimal Time
+                    <a href="#" x-cloak x-show="data" @click.prevent="data = false" style="float: right" class="secondary">Clear</a>
+                </header>
+                <form>
+                    <fieldset role="group">
+                        <input type="time" step="1" id="rep_time" x-model="input">
+                        <input type="button" class="secondary" value="Convert" @click="convert">
+                    </fieldset>
+                </form>
+                <footer>
+                    <table>
+                        <tbody x-cloak x-show="data">
+                        <tr>
+                            <td>Colon separated</td>
+                            <td><span x-text="data.timeString"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Decimal</td>
+                            <td><span x-text="data.timeDecimal"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Hour</td>
+                            <td><span x-text="data.hour"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Minute</td>
+                            <td><span x-text="data.minute"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Second</td>
+                            <td><span x-text="data.second"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </footer>
+            </article>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

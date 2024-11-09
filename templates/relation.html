@@ -2,7 +2,7 @@
 
 {% block content %}
 <section id="relation">
-    <h1>Link Relation</h1>
+    <h2>Link Relation</h2>
     <p class="relation-id">
         <code class="hl">repcal:{{ name }}</code>
     </p>
@@ -10,7 +10,7 @@
         Expanded URI: <code class="hl">{{ request.url }}</code>
     </p>
 
-    <h2>Target Details</h2>
+    <h3>Target Details</h3>
     <ul>
         <li>Media type: <code>{{ info.media_type }}</code></li>
         {% if info.has_schema %}
@@ -20,7 +20,7 @@
         {% endif %}
     </ul>
 
-    <h2>Description</h2>
+    <h3>Description</h3>
     <p>
         {{info.text.replace('\n', '<br>')|safe}}
     </p>
@@ -28,10 +28,10 @@
     <hr>
     <div class="footnote">
         <p>
-            This URI identifies, and provides a short description of, a link relation within the API.
+            <small>This URI identifies, and provides a short description of, a link relation within the API.</small>
         </p>
         <p>
-            Read more about this concept in <a href="https://www.rfc-editor.org/rfc/rfc8288.html">RFC 8288: Web Linking</a>.
+            <small>Read more about this concept in <a href="https://www.rfc-editor.org/rfc/rfc8288.html">RFC 8288: Web Linking</a>.</small>
         </p>
     </div>
 </section>
