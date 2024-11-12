@@ -15,7 +15,7 @@ class ApiIndexResponse(HALResponse):
         self.add_link(Link(
             rel='repcal:now',
             endpoint='now_template',
-            title='Get the current date and time in the French republican systems',
+            title='Get the current date and time in the French republican systems, optionally with UTC offset in minutes.',
             templated=True
         ))
         self.add_link(Link(

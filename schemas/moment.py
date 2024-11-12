@@ -11,10 +11,14 @@ def schema():
             "iso": {
                 "type": "string",
                 "format": "date-time",
-                "description": "ISO 8601 representation of the Moment."
+                "description": "ISO 8601 representation of the point in time."
             },
             "_embedded": {
                 "type": "object",
+                "required": [
+                    "repcal:date",
+                    "repcal:time"
+                ],
                 "description": "Embedded date and time resources."
             }
         },
