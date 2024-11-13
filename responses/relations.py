@@ -23,7 +23,8 @@ class Now(HALRelation):
     def __init__(self):
         super().__init__(
             'moment',
-            'Link that will resolve to a resource representing the current date and time in the French Republican style.',
+            """Link that will resolve to a resource representing the current date and time in the French Republican style.
+            The <small><code>offset</code></small> query parameter can optionally be used to communicate the number of minutes from UTC.""",
             ['ApiIndex']
         )
 

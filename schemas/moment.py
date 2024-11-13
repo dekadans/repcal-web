@@ -5,7 +5,7 @@ def schema():
     return {
         "title": "Moment",
         "type": "object",
-        "description": "A specific point in time.",
+        "description": "A specific point in time, made up of embedded Date and Time resources.",
         "properties": {
             "_links": link.schema(["curies", "repcal:date", "repcal:time"]),
             "iso": {

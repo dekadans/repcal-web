@@ -3,33 +3,35 @@
 {% block content %}
 
 <div class="grid">
+    {% if info %}
     <div>
-        <hgroup>
-            <h1>Link Relation</h1>
-            <p>
-                {{ request.path }}
-            </p>
-        </hgroup>
+        <h1>Link Relation</h1>
+
     </div>
+    {% endif %}
     <div>
         <aside>
                 <details class="dropdown">
                     <summary role="button" class="outline secondary">
-                        Select link relation
+                        /meta/relation/{rel}
                     </summary>
                     <ul>
-                        <li><a href="/meta/relation/now">/meta/relation/now</a></li>
-                        <li><a href="/meta/relation/date">/meta/relation/date</a></li>
-                        <li><a href="/meta/relation/time">/meta/relation/time</a></li>
-                        <li><a href="/meta/relation/observance">/meta/relation/observance</a></li>
-                        <li><a href="/meta/relation/transform">/meta/relation/transform</a></li>
-                        <li><a href="/meta/relation/wiki">/meta/relation/wiki</a></li>
+                        <li><a href="/meta/relation/now">now</a></li>
+                        <li><a href="/meta/relation/date">date</a></li>
+                        <li><a href="/meta/relation/time">time</a></li>
+                        <li><a href="/meta/relation/observance">observance</a></li>
+                        <li><a href="/meta/relation/transform">transform</a></li>
+                        <li><a href="/meta/relation/wiki">wiki</a></li>
                     </ul>
                 </details>
         </aside>
     </div>
 </div>
 
+{% if info %}
+<p>
+    <small><code>{{ request.url }}</code></small>
+</p>
 <p>
     {{info.text.replace('\n', '<br>')|safe}}
 </p>
@@ -69,5 +71,7 @@
         </article>
     </div>
 </div>
+
+{% endif %}
 
 {% endblock %}

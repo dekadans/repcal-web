@@ -53,6 +53,10 @@ def schema_response(data):
     return r
 
 
+@bp.get('/relation')
+def relation_index():
+    return render_template('relation.html', name=None, info=None)
+
 @bp.get('/relation/{rel}')
 def relation_template():
     raise NotFound()
