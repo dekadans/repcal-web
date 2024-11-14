@@ -5,15 +5,16 @@ from flask import url_for
 
 class Link:
     def __init__(self, rel: str, endpoint: str, media_type: str | None = 'application/hal+json', params=None,
-                 external=False, **kwargs) -> None:
+                 external=False, to_many=False, **kwargs) -> None:
         self.rel = rel
         self.endpoint = endpoint
         self.media_type = media_type
         self.params = {} if params is None else params
         self.external = external
+        self.to_many = to_many
         self.kwargs = kwargs
 
-    def parse(self):
+    def parse(self) -> dict:
         if self.external:
             href = self.endpoint
         else:
@@ -33,9 +34,10 @@ class Link:
 class Curie(Link):
     def __init__(self, name: str) -> None:
         super().__init__(
-            rel='',
+            rel='curies',
             endpoint='meta.relation_template',
             media_type='text/html',
             name=name,
-            templated=True
+            templated=True,
+            to_many=True
         )

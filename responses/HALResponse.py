@@ -1,5 +1,5 @@
 from ..resources import Resource
-from .links import Link, Curie
+from .links import Link
 from typing import Dict, List
 from flask import jsonify
 from .factory import make_response
@@ -31,20 +31,17 @@ class HALResponse:
         self.embedded[key] = value
         self.add_link(self._get_resource_link(key, value))
 
-    def add_curie(self, link: Curie) -> None:
-        if 'curies' not in self.links:
-            self.links['curies'] = []
-        self.links['curies'].append(link.parse())
-
     def add_link(self, link: Link) -> None:
+        parsed_link = link.parse()
+
         if link.rel not in self.links:
-            self.links[link.rel] = link.parse()
+            self.links[link.rel] = parsed_link if not link.to_many else [parsed_link]
             return
 
         if type(self.links[link.rel]) is dict:
             self.links[link.rel] = [self.links[link.rel]]
 
-        self.links[link.rel].append(link.parse())
+        self.links[link.rel].append(parsed_link)
 
     def to_dict(self) -> dict:
         if self.is_embedded and 'curies' in self.links:

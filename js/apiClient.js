@@ -29,22 +29,22 @@ const api = fetch('/api')
     .then(data => data[hal.LINKS]);
 
 /*
- Resolve an API resource through a link relation and any parameters.
+ Finds a link from the API Index based on relation (and name, for to-many relationships.)
  */
-async function call(relation, params) {
+async function index(relation, name) {
     const relations = await api;
-    const link = relations[relation];
-    if (!link) {
-        throw new Error(`Unknown resource or operation: ${relation}`)
+    let link = relations[relation];
+    if (Array.isArray(link)) {
+        link = link.find(_ => _.name === name);
     }
 
-    return resolveLink(link, params);
+    return link;
 }
 
 /*
  Resolves a resource from a HAL link object.
  */
-async function resolveLink(link, params) {
+async function resolve(link, params) {
     const uri = link.templated ?
         parseTemplate(link.href).expand(params) : link.href;
     const response = await fetch(uri);
@@ -61,34 +61,39 @@ async function resolveLink(link, params) {
 /*
  Resolves the current date and time.
  */
-async function getNow() {
+function getNow() {
     const offset = (new Date()).getTimezoneOffset() * -1;
-    const apiResponse = await call(rel.NOW, {offset});
 
-    const date = apiResponse[hal.EMBED][rel.DATE];
-    const time = apiResponse[hal.EMBED][rel.TIME];
-    const observance = date[hal.EMBED][rel.OBSERVANCE];
+    return index(rel.NOW)
+        .then(l => resolve(l, {offset}))
+        .then(apiResponse => {
+            const date = apiResponse[hal.EMBED][rel.DATE];
+            const time = apiResponse[hal.EMBED][rel.TIME];
+            const observance = date[hal.EMBED][rel.OBSERVANCE];
 
-    return {
-        ...parseDate(date, observance),
-        ...parseTime(time)
-    };
+            return {
+                ...parseDate(date, observance),
+                ...parseTime(time)
+            };
+        });
 }
 
 /*
  * Converts a date. Required format "yyyy-mm-dd"
  */
-async function convertDate(dateString) {
+function convertDate(dateString) {
     try {
         const [year, month, day] = handleInput(dateString, '-');
 
-        const apiDate = await call(rel.DATE, {year, month, day});
-        const apiObservance = await resolveLink(
-            apiDate[hal.LINKS][rel.OBSERVANCE],
-            null
-        );
-
-        return parseDate(apiDate, apiObservance);
+        return index(rel.DATE)
+            .then(l => resolve(l, {year, month, day}))
+            .then(apiDate => {
+                return Promise.all([
+                    apiDate,
+                    resolve(apiDate[hal.LINKS][rel.OBSERVANCE])
+                ]);
+            })
+            .then(data => parseDate(...data))
     } catch (e) {
         alert('Invalid input date.');
         return false;
@@ -98,18 +103,22 @@ async function convertDate(dateString) {
 /*
  * Converts a timestamp. Required format "hh:mm:ss"
  */
-async function convertTime(timeString) {
+function convertTime(timeString) {
     try {
         const [hour, minute, second] = handleInput(timeString, ':');
-        return parseTime(
-            await call(rel.TIME, {hour, minute, second})
-        );
+
+        return index(rel.TIME)
+            .then(l => resolve(l, {hour, minute, second}))
+            .then(t => parseTime(t));
     } catch (e) {
         alert('Invalid input time.');
         return false;
     }
 }
 
+/*
+ Splits and validates input.
+ */
 function handleInput(value, separator) {
     const parts = value.split(separator);
     if (parts.length < 3) {
@@ -141,8 +150,8 @@ function parseDate(apiDate, apiObservance) {
         observingMonth: apiObservance.attributes.month.name,
         observingDay: apiObservance.attributes.day.name,
 
-        dayLink: wikiLinks.find(l => l.name === 'day').href,
-        monthLink: wikiLinks.find(l => l.name === 'month').href
+        dayLink: wikiLinks.find(_ => _.name === 'day').href,
+        monthLink: wikiLinks.find(_ => _.name === 'month').href
     }
 }
 
@@ -162,15 +171,15 @@ function parseTime(apiTime) {
 /*
  Get the XSL Transform stylesheet for turning the tagged observance text into HTML.
  */
-async function getObservanceTransform() {
-    return call(rel.TRANSFORM, null);
+function getObservanceTransform() {
+    return index(rel.TRANSFORM, 'observance').then(_ => resolve(_));
 }
 
 /*
  Get API documentation in Markdown.
  */
-async function getDocs() {
-    return call(rel.DOCS, null);
+function getDocs() {
+    return index(rel.DOCS).then(_ => resolve(_));
 }
 
 export {

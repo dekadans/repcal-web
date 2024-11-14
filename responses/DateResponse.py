@@ -7,7 +7,7 @@ class DateResponse(HALResponse):
     def __init__(self, d: Date, e) -> None:
         super().__init__(d, e)
 
-        self.add_curie(Curie('repcal'))
+        self.add_link(Curie('repcal'))
 
         observance_rel = 'repcal:observance'
         if observance_rel in self.requested_embeds:

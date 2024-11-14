@@ -6,7 +6,7 @@ def schema():
         "type": "object",
         "description": "Information about the observance or celebration of a particular day.",
         "properties": {
-            "_links": link.schema(["curies", "repcal:wiki"]),
+            "_links": link.schema(["repcal:wiki"]),
             "texts": {
                 "type": "object",
                 "required": [

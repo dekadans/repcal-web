@@ -35,7 +35,8 @@ class ApiIndexResponse(HALResponse):
             endpoint='meta.transform_observance',
             title='Default HTML transformation for the tagged observance text.',
             name='observance',
-            media_type='application/xml'
+            media_type='application/xml',
+            to_many=True
         ))
-        self.add_curie(Curie('repcal'))
+        self.add_link(Curie('repcal'))
 

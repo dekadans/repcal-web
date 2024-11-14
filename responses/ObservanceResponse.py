@@ -7,7 +7,7 @@ class ObservanceResponse(HALResponse):
     def __init__(self, o: Observance, e) -> None:
         super().__init__(o, e)
 
-        self.add_curie(Curie('repcal'))
+        self.add_link(Curie('repcal'))
 
         rel = 'repcal:wiki'
 

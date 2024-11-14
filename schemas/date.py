@@ -7,7 +7,7 @@ def schema():
         "type": "object",
         "description": "Date information in the French Republican style.",
         "properties": {
-            "_links": link.schema(["curies", "repcal:observance"]),
+            "_links": link.schema(["repcal:observance"]),
             "texts": {
                 "type": "object",
                 "required": [
