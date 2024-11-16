@@ -1,4 +1,4 @@
-import * as apiClient from "./apiClient"
+import * as apiClient from "./apiClient.js"
 import {marked} from "marked";
 
 export default () => ({

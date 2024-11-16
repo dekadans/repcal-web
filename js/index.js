@@ -1,7 +1,7 @@
 import Alpine from 'alpinejs'
-import now from './now'
-import * as details from './details'
-import docs from './docs'
+import now from './now.js'
+import * as details from './details.js'
+import docs from './docs.js'
 
 function initNow() {
     document.addEventListener('alpine:init', () => {

@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "description": "The source of the [repcal.info](https://repcal.info) website and REST API.",
   "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "watch": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "prod": "webpack --mode=production"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^5.91.0",
+    "@hyperjump/json-schema": "^1.9.9",
+    "mocha": "^10.8.2",
+    "webpack": "5.94.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
