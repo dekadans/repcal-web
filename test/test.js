@@ -2,9 +2,39 @@ import { registerSchema, validate } from "@hyperjump/json-schema/draft-2019-09";
 import { strict as assert } from 'node:assert';
 
 const HOST = process.env.REPCAL_HOST ?? 'https://repcal.info';
+const STRICT = process.env.REPCAL_TEST_STRICT ?? false;
 
+/*
+ If we test in strict mode, we add "additionalProperties": false
+ to all "object" schemas, where not otherwise specified.
+ */
+function strictSchema(obj) {
+    if (obj.type === "object" && !('additionalProperties' in obj)) {
+        obj.additionalProperties = false;
+    }
+
+    if (obj.properties && typeof obj.properties === "object") {
+        for (const key in obj.properties) {
+            if (obj.properties.hasOwnProperty(key)) {
+                strictSchema(obj.properties[key]);
+            }
+        }
+    }
+
+    return obj;
+}
+
+/*
+ Validation of a HAL resource using the schema linked using the `describedby` relation.
+ */
 async function schemaValidate(resource) {
     const schemaUri = resource._links.describedby.href;
+    if (STRICT !== false) {
+        const schema = await fetch(schemaUri)
+            .then(res => res.json())
+            .then(json => strictSchema(json));
+        registerSchema(schema, schemaUri);
+    }
     const result = await validate(schemaUri, resource);
     return result.valid;
 }

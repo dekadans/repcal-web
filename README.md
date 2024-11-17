@@ -30,3 +30,13 @@ Run API tests:
 ```shell
 REPCAL_HOST=http://localhost:8080 npm test
 ```
+
+The tests will validate API responses against the provided JSON schema.
+These schemas allow, by design, new properties to be added without being considered breaking changes.
+
+But it is possible to tell the tests to add `"additionalProperties": false` where applicable.
+This is useful to make sure that schemas have been updated to include new data.
+
+```shell
+REPCAL_HOST=http://localhost:8080 REPCAL_TEST_STRICT=1 npm test
+```

@@ -19,7 +19,10 @@ def schema():
                     "repcal:date",
                     "repcal:time"
                 ],
-                "description": "Embedded date and time resources."
+                "description": "Embedded date and time resources.",
+                "additionalProperties": {
+                    "type": "object"
+                }
             }
         },
         "required": [
