@@ -6,11 +6,6 @@ from .responses import relations
 bp = Blueprint('meta', __name__, url_prefix='/meta')
 
 
-@bp.get('/openapi')
-def openapi():
-    return send_file('schemas/openapi.yaml', 'application/openapi+yaml;version=3.1')
-
-
 @bp.get('/service/doc')
 def service_doc():
     return send_file('schemas/api.md', 'text/markdown')
@@ -81,4 +76,4 @@ def relation(rel: str):
 
 @bp.get('/transform/observance')
 def transform_observance():
-    return send_file('metadata/observance.xslt', 'application/xml')
+    return send_file('observance/observance.xslt', 'application/xml')

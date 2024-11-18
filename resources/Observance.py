@@ -1,5 +1,5 @@
 from . import Resource
-from ..metadata import get_day_by_index, get_month_by_index
+from ..observance import get_day_by_index, get_month_by_index
 import re
 
 
