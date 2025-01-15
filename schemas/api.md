@@ -22,8 +22,16 @@ Entry Point
 The [index resource (/api)](/api) serves as the entry point to navigating the API and
 lists available operations and resources.
 
+**Example:** Resolving the `repcal:now` link in the index resource will return
+representations of the current date and time.
+
 CLI Tool
 --------
 
 In addition to this website and API there's also [repcal](https://github.com/dekadans/repcal)
 the CLI application (and Python library) for doing basic calendar and time related conversions.
+
+Issues
+------
+
+Problems with this website or API can be reported on its [Github repository](https://github.com/dekadans/repcal-web).
