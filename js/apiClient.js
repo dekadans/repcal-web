@@ -83,7 +83,7 @@ function getNow() {
  */
 function convertDate(dateString) {
     try {
-        const [year, month, day] = handleInput(dateString, '-');
+        const [year, month, day] = handleInput(dateString, '-', 3);
 
         return index(rel.DATE)
             .then(l => resolve(l, {year, month, day}))
@@ -105,7 +105,10 @@ function convertDate(dateString) {
  */
 function convertTime(timeString) {
     try {
-        const [hour, minute, second] = handleInput(timeString, ':');
+        let [hour, minute, second] = handleInput(timeString, ':', 2);
+        if (!second) {
+            second = "00";
+        }
 
         return index(rel.TIME)
             .then(l => resolve(l, {hour, minute, second}))
@@ -119,9 +122,9 @@ function convertTime(timeString) {
 /*
  Splits and validates input.
  */
-function handleInput(value, separator) {
+function handleInput(value, separator, length) {
     const parts = value.split(separator);
-    if (parts.length < 3) {
+    if (parts.length < length) {
         throw Error('Invalid input');
     }
     return parts;
