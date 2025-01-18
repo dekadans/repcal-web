@@ -5,6 +5,13 @@ export default () => ({
     minute: 0,
     second: 0,
 
+    yearProgress: 0,
+    yearLength: 365,
+    yearArabic: 0,
+    get yearProgressLabel() {
+        return `Day ${this.yearProgress} (of ${this.yearLength}) in the year ${this.yearArabic}.`;
+    },
+
     date: 'Loading...',
     dateShort: '',
     observance: '',

@@ -142,6 +142,8 @@ function parseDate(apiDate, apiObservance) {
 
         yearRoman: apiDate.attributes.year.roman,
         yearArabic: apiDate.attributes.year.arabic,
+        yearProgress: apiDate.attributes.day.number_in_year,
+        yearLength: apiDate.attributes.year.leap ? 366 : 365,
 
         monthName: apiDate.attributes.month.name,
         monthNumber: apiDate.attributes.month.number,

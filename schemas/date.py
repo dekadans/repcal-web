@@ -111,7 +111,8 @@ def schema():
                         "type": "object",
                         "required": [
                             "arabic",
-                            "roman"
+                            "roman",
+                            "leap"
                         ],
                         "description": "Information about this date's year.",
                         "properties": {
@@ -120,6 +121,9 @@ def schema():
                             },
                             "roman": {
                                 "type": "string"
+                            },
+                            "leap": {
+                                "type": "boolean"
                             }
                         }
                     }

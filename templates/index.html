@@ -25,7 +25,7 @@
 
     <section id="celebration">
         <p x-html="observance"></p>
-        <hr>
+        <progress :value="yearProgress" :max="yearLength" :title="yearProgressLabel"></progress>
         <div class="footnote">
             <p>
                 <small>This page shows the current date and time using the systems implemented by the French First Republic.</small>

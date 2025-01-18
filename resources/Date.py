@@ -45,7 +45,8 @@ class Date(Resource):
                 },
                 "year": {
                     "arabic": self.republican.get_year_arabic(),
-                    "roman": self.republican.get_year_roman()
+                    "roman": self.republican.get_year_roman(),
+                    "leap": RepublicanDate.is_leap_year(self.republican.get_year_arabic())
                 }
             }
         }
