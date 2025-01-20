@@ -31,10 +31,10 @@ class ApiIndexResponse(HALResponse):
             templated=True
         ))
         self.add_link(Link(
-            rel='repcal:transform',
+            rel='repcal:ui',
             endpoint='meta.transform_observance',
             title='Default HTML transformation for the tagged observance text.',
-            name='observance',
+            name='transform_observance',
             media_type='application/xml',
             to_many=True
         ))

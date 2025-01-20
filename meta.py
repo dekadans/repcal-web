@@ -65,7 +65,7 @@ def relation(rel: str):
         'observance': relations.Observance,
         'time': relations.Time,
         'wiki': relations.Wikipedia,
-        'transform': relations.Transform
+        'ui': relations.UI
     }
 
     if rel in rels:

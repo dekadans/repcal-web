@@ -58,12 +58,12 @@ class Time(HALRelation):
         )
 
 
-class Transform(Relation):
+class UI(Relation):
     def __init__(self):
         super().__init__(
             'application/xml',
             'XSLT Stylesheet document',
-            text='Link to an XSL transformation resource used when rendering the repcal.info UI.',
+            text='Links to resources used when rendering the repcal.info UI.',
             used_by=['ApiIndex']
         )
 

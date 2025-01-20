@@ -9,7 +9,7 @@ const rel = {
     TIME: 'repcal:time',
     OBSERVANCE: 'repcal:observance',
     WIKI: 'repcal:wiki',
-    TRANSFORM: 'repcal:transform',
+    UI: 'repcal:ui',
     DOCS: 'service-doc'
 };
 
@@ -177,7 +177,7 @@ function parseTime(apiTime) {
  Get the XSL Transform stylesheet for turning the tagged observance text into HTML.
  */
 function getObservanceTransform() {
-    return index(rel.TRANSFORM, 'observance').then(_ => resolve(_));
+    return index(rel.UI, 'transform_observance').then(_ => resolve(_));
 }
 
 /*

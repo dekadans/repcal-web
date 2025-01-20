@@ -12,7 +12,7 @@ def schema():
                 "repcal:now",
                 "repcal:date",
                 "repcal:time",
-                "repcal:transform",
+                "repcal:ui",
                 "curies"
             ])
         },
