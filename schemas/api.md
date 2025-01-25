@@ -5,10 +5,18 @@ The API that powers Repcal.info is available for anyone free of charge and witho
 
 It is designed around hypermedia principles using
 [JSON Hypertext Application Language (HAL)](https://datatracker.ietf.org/doc/html/draft-kelly-json-hal)
-as the primary media type.
+as the primary media type. _Hypermedia_ in this context means that the client interacts with the application by following links
+provided by the server.
 
-_Hypermedia_ in this context means that interaction with the API is done using client selection
-of server-provided choices, i.e. using the application by following links from one resource to another.
+Index Resource
+--------------
+
+The [index resource (/api)](/api) serves as the entry point to navigating the API and 
+links to available operations and resources.
+
+Link Relation
+-------------
+
 The relationship between two linked resources is described by the _link relation type_
 (as defined by [RFC 8288: Web Linking](https://www.rfc-editor.org/rfc/rfc8288.html)).
 
@@ -16,22 +24,15 @@ This API has defined a handful of [custom link relation types](/meta/relation),
 but also use ones that are registered with IANA, like `describedby` which in this API will link to
 [JSON schemas](https://json-schema.org/) for all API resources.
 
-Entry Point
+Under the Hood
 -----------
 
-The [index resource (/api)](/api) serves as the entry point to navigating the API and
-lists available operations and resources.
+The functionality seen on Repcal.info is implemented in two separate code repositories:
 
-**Example:** Resolving the `repcal:now` link in the index resource will return
-representations of the current date and time.
+- [repcal](https://github.com/dekadans/repcal): The core date and time conversion functionality as a Python package and CLI tool. 
+- [repcal-web](https://github.com/dekadans/repcal-web): This website and API as well as observational data for each day and month.
 
-CLI Tool
---------
+Both applications are published under the MIT license.
+Problems or suggestions can be submitted as issues to the appropriate repository.
 
-In addition to this website and API there's also [repcal](https://github.com/dekadans/repcal)
-the CLI application (and Python library) for doing basic calendar and time related conversions.
-
-Issues
-------
-
-Problems with this website or API can be reported on its [Github repository](https://github.com/dekadans/repcal-web).
+Repcal is maintained by [Tomas Thelander](https://tthe.se).
