@@ -20,7 +20,7 @@ class Observance(Resource):
     def _get_texts(self) -> dict:
         if self.day_number > 360:
             day = self.day.name.lower()
-            text = f"<observance><day>Complementary day</day> celebrating <month>{day}</month>.</observance>"
+            text = f"<observance><month>Complementary day</month> celebrating <day>{day}</day>.</observance>"
         else:
             month = self.month.name.lower()
             day = self.day.name.lower()
